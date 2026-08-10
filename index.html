@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIDMax Development Roadmap</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(45deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .progress-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .progress-stats {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.05);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .phase-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s forwards;
+        }
+
+        .phase-section:nth-child(2) { animation-delay: 0.1s; }
+        .phase-section:nth-child(3) { animation-delay: 0.2s; }
+        .phase-section:nth-child(4) { animation-delay: 0.3s; }
+        .phase-section:nth-child(5) { animation-delay: 0.4s; }
+        .phase-section:nth-child(6) { animation-delay: 0.5s; }
+
+        .phase-header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .phase-header h3 {
+            margin: 0;
+            color: #a78bfa;
+            font-size: 1.4rem;
+        }
+
+        .phase-header p {
+            margin: 5px 0 0 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .task-item.completed .task-title {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-wrapper {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-wrapper input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 24px;
+            width: 24px;
+            background-color: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .task-item:hover .checkmark {
+            border-color: var(--accent-hover);
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark {
+            background-color: var(--success);
+            border-color: var(--success);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark:after {
+            display: block;
+            animation: checkmark 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .task-content {
+            flex-grow: 1;
+        }
+
+        .task-title {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .task-desc {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .reset-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes checkmark {
+            0% { transform: rotate(45deg) scale(0); opacity: 0; }
+            50% { transform: rotate(45deg) scale(1.2); opacity: 1; }
+            100% { transform: rotate(45deg) scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>SIDMax Development Roadmap</h1>
+        <p>Interactive tracking dashboard for the Rebar Detailing Assistant</p>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-header">
+            <h2>Overall Progress</h2>
+            <div class="progress-stats"><span id="completed-count">0</span> / 22 Tools</div>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase-section">
+        <div class="phase-header">
+            <h3>Phase 1: Quality Control & Entity Auditing</h3>
+            <p>Tools that integrate directly into the existing SIDmax_DrawingChecker engine.</p>
+        </div>
+        <div class="task-list">
+            <label class="task-item" id="item-1">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(1)" id="check-1">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">1. Leader Checker</h4>
+                    <p class="task-desc">Iterates through all Multi-Leaders to ensure arrowhead and dot sizes match the client standard.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-2">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(2)" id="check-2">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">2. Incomplete Leader Deductor</h4>
+                    <p class="task-desc">Scans the drawing for "floating" leaders or leaders with empty/missing text fields, highlighting them for the detailer.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-3">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(3)" id="check-3">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">3. Range Size Checker</h4>
+                    <p class="task-desc">Audits rebar range dimensions and distribution lines to ensure correct spacing, text heights, and tick sizes.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-4">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(4)" id="check-4">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">4. Edited Dimension Deductor</h4>
+                    <p class="task-desc">Scans all dimensions and flags any where the user has overridden the true measurement with fake text.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-5">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(5)" id="check-5">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">5. Standee Checker</h4>
+                    <p class="task-desc">Verifies that standees (support chairs) are placed correctly according to slab thickness and reinforcement layers.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-6">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(6)" id="check-6">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">6. Rebar Donut Size Checker</h4>
+                    <p class="task-desc">Audits the block scale and diameter of "donut" blocks used to represent bars in cross-section.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-7">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(7)" id="check-7">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">7. Support File Checker</h4>
+                    <p class="task-desc">Expands the current checker to deeply verify that all required .ctb, .pc3, .lin, and .shx files are mapped, present, and uncorrupted.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-8">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(8)" id="check-8">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">8. Bar Label Format Checker</h4>
+                    <p class="task-desc">Uses Regular Expressions to ensure rebar callouts strictly follow the required syntax (e.g., 4-T16-200 B1).</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-9">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(9)" id="check-9">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">9. Bar Reference Format Checker</h4>
+                    <p class="task-desc">Validates reference callouts to ensure they correctly link back to the source detail or schedule.</p>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-section">
+        <div class="phase-header">
+            <h3>Phase 2: Drafting & Detailing Automation</h3>
+            <p>Active tools that speed up the physical drafting process and eliminate manual drawing tasks.</p>
+        </div>
+        <div class="task-list">
+            <label class="task-item" id="item-10">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(10)" id="check-10">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">10. Leader Lisp</h4>
+                    <p class="task-desc">A customized Multi-Leader placement tool optimized for rebar callouts, instantly applying correct formatting.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-11">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(11)" id="check-11">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">11. Revision Cloud Lisp w/ Adjustment Grip</h4>
+                    <p class="task-desc">A smarter RevCloud tool that generates clean arcs and includes custom grips to stretch/adjust.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-12">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(12)" id="check-12">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">12. Level Converter</h4>
+                    <p class="task-desc">Automatically converts Architectural levels/elevations to Structural levels based on a datum offset.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-13">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(13)" id="check-13">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">13. Standard Layer Generator</h4>
+                    <p class="task-desc">A single-click script that instantly purges unused layers and generates the complete SIDMax standard layer dictionary.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-14">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(14)" id="check-14">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">14. Dynamic Level Show</h4>
+                    <p class="task-desc">A smart elevation block/tag that automatically recalculates and updates its own text when moved in AutoCAD.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-15">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(15)" id="check-15">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">15. Accessories Detailer</h4>
+                    <p class="task-desc">An automated tool to draw standard reinforcement accessories (couplers, terminators).</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-16">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(16)" id="check-16">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">16. Support Accessories Generator</h4>
+                    <p class="task-desc">Automatically calculates and draws Spacers, Chairs, and Construction links at required spacing intervals.</p>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-section">
+        <div class="phase-header">
+            <h3>Phase 3: Project Management & Output</h3>
+            <p>Tools for configuration, documentation, and plotting.</p>
+        </div>
+        <div class="task-list">
+            <label class="task-item" id="item-17">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(17)" id="check-17">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">17. Batch PDF Layouts</h4>
+                    <p class="task-desc">A 1-click publishing tool that automatically plots every layout in the drawing to PDF and silently saves them.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-18">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(18)" id="check-18">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">18. Client Setup Importer</h4>
+                    <p class="task-desc">Expands the Drawing Checker to allow importing entirely different standard configurations based on the client.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-19">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(19)" id="check-19">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">19. Abbreviation Table Generator</h4>
+                    <p class="task-desc">Scans the drawing for known abbreviations and automatically generates a standard Legend/Abbreviation Table block.</p>
+                </div>
+            </label>
+            <label class="task-item" id="item-20">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(20)" id="check-20">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">20. Detailer Dictionary</h4>
+                    <p class="task-desc">A built-in spell-checker and terminology standardizer that flags non-standard terminology.</p>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-section">
+        <div class="phase-header">
+            <h3>Phase 4: Rebar Engineering & Math</h3>
+            <p>Complex mathematical algorithms for layout.</p>
+        </div>
+        <div class="task-list">
+            <label class="task-item" id="item-21">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(21)" id="check-21">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">21. Rebar Run (Lap, Stock, Gap)</h4>
+                    <p class="task-desc">Intelligently populates a run of rebar, inserting Lap Splices when the run exceeds maximum Stock Length.</p>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase-section">
+        <div class="phase-header">
+            <h3>Phase 5: Shop Drawing Schedule & BBS Auditing</h3>
+            <p>A massive standalone module dedicated entirely to parsing, validating, and error-checking the Bar Bending Schedule.</p>
+        </div>
+        <div class="task-list">
+            <label class="task-item" id="item-22">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" onchange="toggleTask(22)" id="check-22">
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-content">
+                    <h4 class="task-title">22. Shop Drawing Schedule Checker Suite</h4>
+                    <p class="task-desc">A 14-point audit that will run automatically on your Bar Bending Schedules (Prefix, Hook Length, Stock, Sorting, etc).</p>
+                </div>
+            </label>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const TOTAL_TASKS = 22;
+    
+    // Initialize from local storage
+    document.addEventListener('DOMContentLoaded', () => {
+        let savedData = JSON.parse(localStorage.getItem('sidmax_roadmap')) || {};
+        
+        // If empty, auto-check the first two (since we finished them!)
+        if (Object.keys(savedData).length === 0) {
+            savedData = { 1: true, 2: true };
+            localStorage.setItem('sidmax_roadmap', JSON.stringify(savedData));
+        }
+
+        for (let i = 1; i <= TOTAL_TASKS; i++) {
+            if (savedData[i]) {
+                document.getElementById(`check-${i}`).checked = true;
+                document.getElementById(`item-${i}`).classList.add('completed');
+            }
+        }
+        updateProgress();
+    });
+
+    function toggleTask(id) {
+        const isChecked = document.getElementById(`check-${id}`).checked;
+        const item = document.getElementById(`item-${id}`);
+        
+        if (isChecked) {
+            item.classList.add('completed');
+        } else {
+            item.classList.remove('completed');
+        }
+
+        // Save to local storage
+        let savedData = JSON.parse(localStorage.getItem('sidmax_roadmap')) || {};
+        savedData[id] = isChecked;
+        localStorage.setItem('sidmax_roadmap', JSON.stringify(savedData));
+
+        updateProgress();
+    }
+
+    function updateProgress() {
+        let completed = 0;
+        for (let i = 1; i <= TOTAL_TASKS; i++) {
+            if (document.getElementById(`check-${i}`).checked) {
+                completed++;
+            }
+        }
+        
+        const percentage = (completed / TOTAL_TASKS) * 100;
+        document.getElementById('progress-bar').style.width = `${percentage}%`;
+        document.getElementById('completed-count').innerText = completed;
+    }
+
+    function resetProgress() {
+        if(confirm("Are you sure you want to reset all progress?")) {
+            localStorage.setItem('sidmax_roadmap', JSON.stringify({}));
+            for (let i = 1; i <= TOTAL_TASKS; i++) {
+                document.getElementById(`check-${i}`).checked = false;
+                document.getElementById(`item-${i}`).classList.remove('completed');
+            }
+            updateProgress();
+        }
+    }
+</script>
+
+</body>
+</html>
