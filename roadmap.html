@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIDMax Development Roadmap</title>
+    <!-- FontAwesome for Line Art Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
@@ -23,15 +25,96 @@
             background: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             min-height: 100vh;
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 0;
+        }
+        
+        .nav-inner {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-center a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-center a:hover {
+            color: white;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .btn-signup {
+            background-color: white !important;
+            color: black !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
 
         .container {
             max-width: 900px;
             width: 100%;
+            margin: 60px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .header {
@@ -285,6 +368,22 @@
     </style>
 </head>
 <body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo"><i class="fas fa-compass"></i> SIDMax</div>
+            <div class="nav-center">
+                <a href="index.html#products">Products <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#commands">Commands</a>
+                <a href="roadmap.html" style="color: white;">Roadmap</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="index.html#login" class="btn-login">Log in</a>
+                <a href="index.html#signup" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </nav>
 
 <div class="container">
     <div class="header">
