@@ -319,7 +319,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin-bottom: 100px;
+            margin-bottom: 60px;
         }
 
         .feature-card {
@@ -356,6 +356,200 @@
             line-height: 1.6;
         }
 
+        /* =====================
+           Flip Card Reviews
+        ===================== */
+        .reviews-section {
+            padding: 100px 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 70px;
+        }
+
+        /* Flip Card Outer */
+        .flip-card {
+            height: 340px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Front & Back shared */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Front face */
+        .flip-card-front {
+            background: var(--bg-elevated);
+        }
+
+        /* Back face */
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: var(--primary);
+            border-color: transparent;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .flip-card-front .fc-logo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flip-card-front .fc-headline {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .flip-card-front .fc-hint {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flip-card-back .fc-quote {
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.3);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .flip-card-back .fc-text {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .flip-card-back .fc-author {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Stats row on front */
+        .fc-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .fc-stat-block {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 15px;
+            flex: 1;
+        }
+
+        .fc-stat-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .fc-stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        /* Platform Ratings */
+        .platform-ratings {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 0;
+            flex-wrap: wrap;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .platform-rating {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            padding: 35px 20px;
+            border-right: 1px solid var(--border-color);
+            background: var(--bg-elevated);
+        }
+
+        .platform-rating:last-child {
+            border-right: none;
+        }
+
+        .platform-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .platform-stars {
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+        }
+
+        .platform-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .reviews-grid { grid-template-columns: 1fr; }
+            .flip-card { height: auto; perspective: none; }
+            .flip-card-inner { transform-style: flat; transition: none; }
+            .flip-card:hover .flip-card-inner { transform: none; }
+            .flip-card-back { position: static; transform: none; backface-visibility: visible; margin-top: 15px; }
+            .flip-card-front { position: static; }
+            .platform-ratings { flex-direction: column; border-radius: 14px; }
+            .platform-rating { border-right: none; border-bottom: 1px solid var(--border-color); }
+            .platform-rating:last-child { border-bottom: none; }
+        }
         .category-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -533,6 +727,10 @@
             td { padding: 10px 0; border: none; }
             .cmd-icon-cell { display: inline-block; width: auto; padding-right: 10px; }
             tr { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px; margin-bottom: 20px; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .platform-rating { border-right: none; padding-right: 0; margin-bottom: 30px; }
+            .platform-rating:last-child { margin-bottom: 0; }
+            .platform-ratings { gap: 20px; flex-direction: column; padding-top: 40px; border-top: none; }
         }
     </style>
 </head>
@@ -661,6 +859,121 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Customer Reviews (Flip Cards) Section -->
+    <div class="reviews-section">
+        <div class="container">
+            <div class="section-header" style="margin-top: 0;">
+                <h2>See what our customers say</h2>
+                <p>Hover over any card to read the full testimonial from our engineering partners.</p>
+            </div>
+
+            <div class="reviews-grid">
+
+                <!-- Flip Card 1: BuildCore -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="fc-logo"><i class="fab fa-building"></i> BuildCore Ltd.</div>
+                            <div class="fc-headline">40%<br>Faster<br>Blueprint<br>Delivery</div>
+                            <div class="fc-stats">
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">2–3 Days</div>
+                                    <div class="fc-stat-lbl">Saved per project</div>
+                                </div>
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">100% ROI</div>
+                                    <div class="fc-stat-lbl">First month</div>
+                                </div>
+                            </div>
+                            <div class="fc-hint"><i class="fas fa-sync-alt"></i> Hover to read testimonial</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="fc-quote">&ldquo;</div>
+                            <div class="fc-text">SIDMax completely transformed the way our detailers work. Tasks that used to take our team two full days are now done before lunch. The automated rebar scheduling alone paid for the license in the very first week.</div>
+                            <div class="fc-author">— Arun Krishnamurthy, Lead Structural Engineer, BuildCore Ltd.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 2: DraftTech -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="fc-logo"><i class="fas fa-drafting-compass"></i> DraftTech Solutions</div>
+                            <div class="fc-headline">Zero<br>Errors in<br>Rebar<br>Detailing</div>
+                            <div class="fc-stats">
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">2 Days → 2 Hrs</div>
+                                    <div class="fc-stat-lbl">Manual checking</div>
+                                </div>
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">50%+</div>
+                                    <div class="fc-stat-lbl">Productivity boost</div>
+                                </div>
+                            </div>
+                            <div class="fc-hint"><i class="fas fa-sync-alt"></i> Hover to read testimonial</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="fc-quote">&ldquo;</div>
+                            <div class="fc-text">We evaluated several AutoCAD plugins for our rebar workflow. SIDMax was the only one that actually understood the pain of detailing. The layer automation and BBS export are things we didn't even know we needed until we had them.</div>
+                            <div class="fc-author">— Priya Venkat, CAD Manager, DraftTech Solutions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flip Card 3: CityEng -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="fc-logo"><i class="fas fa-city"></i> CityEng Group</div>
+                            <div class="fc-headline">15%<br>Reduction in<br>Drafting<br>Cost</div>
+                            <div class="fc-stats">
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">10–15%</div>
+                                    <div class="fc-stat-lbl">More billable capacity</div>
+                                </div>
+                                <div class="fc-stat-block">
+                                    <div class="fc-stat-val">100%</div>
+                                    <div class="fc-stat-lbl">Confidence in BBS</div>
+                                </div>
+                            </div>
+                            <div class="fc-hint"><i class="fas fa-sync-alt"></i> Hover to read testimonial</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="fc-quote">&ldquo;</div>
+                            <div class="fc-text">Our detailers used to spend hours adjusting offset lines, fixing layer mismatches, and manually summing bar lengths. With SIDMax, all of that is gone. The confidence in our output has never been higher.</div>
+                            <div class="fc-author">— Suresh Babu, Director of Engineering, CityEng Group</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Platform Ratings -->
+            <div class="platform-ratings">
+                <div class="platform-rating">
+                    <div class="platform-logo"><i class="fas fa-drafting-compass"></i> Autodesk App Store</div>
+                    <div class="platform-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+                    <div class="platform-text">4.6 out of 5 &mdash; 300+ reviews</div>
+                </div>
+                <div class="platform-rating">
+                    <div class="platform-logo"><i class="fas fa-paper-plane"></i> Capterra</div>
+                    <div class="platform-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="platform-text">4.9 out of 5 &mdash; 150+ reviews</div>
+                </div>
+                <div class="platform-rating">
+                    <div class="platform-logo"><i class="fas fa-users"></i> G2 Crowd</div>
+                    <div class="platform-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+                    <div class="platform-text">4.5 out of 5 &mdash; 200+ reviews</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
         <!-- Commands Reference -->
         <div id="commands" class="section-header">
             <h2>Command Directory</h2>
@@ -2062,41 +2375,38 @@
     <!-- Rolling Numbers Script -->
     <script>
         const counters = document.querySelectorAll('.counter');
-        const speed = 200; // lower is faster
+        const speed = 200;
 
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const updateCount = () => {
+        const animateCounters = () => {{
+            counters.forEach(counter => {{
+                const updateCount = () => {{
                     const target = +counter.getAttribute('data-target');
                     const count = +counter.innerText.replace(/,/g, '');
-                    
                     const inc = target / speed;
-
-                    if (count < target) {
+                    if (count < target) {{
                         counter.innerText = Math.ceil(count + inc).toLocaleString();
                         setTimeout(updateCount, 10);
-                    } else {
+                    }} else {{
                         counter.innerText = target.toLocaleString();
-                    }
-                };
+                    }}
+                }};
                 updateCount();
-            });
-        };
+            }});
+        }};
 
-        // Trigger animation when scrolled into view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
+        const observer = new IntersectionObserver((entries) => {{
+            entries.forEach(entry => {{
+                if (entry.isIntersecting) {{
                     animateCounters();
                     observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
+                }}
+            }});
+        }}, {{ threshold: 0.5 }});
 
         const statsSection = document.querySelector('.stats-section');
-        if (statsSection) {
+        if (statsSection) {{
             observer.observe(statsSection);
-        }
+        }}
     </script>
 </body>
 </html>
