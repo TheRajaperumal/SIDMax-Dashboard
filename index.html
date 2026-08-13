@@ -10,16 +10,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
         :root {
-            --bg-base: #09090b; /* Zinc 950 - Extremely dark grey, almost black */
-            --bg-surface: #18181b; /* Zinc 900 */
-            --bg-elevated: #27272a; /* Zinc 800 */
-            --primary: #3b82f6; /* Professional blue */
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --bg-elevated: #27272a;
+            --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --accent: #10b981; /* Emerald green for positive stats */
+            --accent: #10b981;
             --text-main: #fafafa;
             --text-muted: #a1a1aa;
             --border-color: rgba(255, 255, 255, 0.08);
-            
             font-family: 'Inter', sans-serif;
         }
 
@@ -39,7 +38,6 @@
             padding: 0 40px;
         }
 
-        /* Sticky Navigation */
         nav {
             position: sticky;
             top: 0;
@@ -119,7 +117,6 @@
             box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
 
-        /* Giant Hero Section */
         .hero-wrapper {
             position: relative;
             min-height: 90vh;
@@ -129,8 +126,8 @@
                         url('https://images.unsplash.com/photo-1536895058696-a69b1c7ba34d?auto=format&fit=crop&q=80&w=2000');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax effect */
-            margin-top: -72px; /* Pull up behind the nav */
+            background-attachment: fixed;
+            margin-top: -72px;
             padding-top: 72px;
             border-bottom: 1px solid var(--border-color);
         }
@@ -191,7 +188,6 @@
             text-decoration: underline;
         }
 
-        /* Rolling Stats Section */
         .stats-section {
             padding: 80px 0;
             background: var(--bg-surface);
@@ -237,8 +233,68 @@
             margin: 5px 0 0 0;
             font-weight: 500;
         }
+        
+        /* Marquee Animation */
+        .marquee-wrapper {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .marquee-wrapper::before, .marquee-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+        }
+        .marquee-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-base), transparent);
+        }
+        .marquee-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-base), transparent);
+        }
 
-        /* Info Section */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: scrollMarquee 30s linear infinite;
+            gap: 80px;
+            padding-left: 80px;
+        }
+        
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .marquee-item:hover {
+            opacity: 1;
+            color: white;
+        }
+
+        @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .section-header {
             text-align: center;
             margin: 120px 0 60px 0;
@@ -259,7 +315,6 @@
             margin: 20px auto 0 auto;
         }
 
-        /* Tool Grid */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -301,7 +356,6 @@
             line-height: 1.6;
         }
 
-        /* Tables */
         .category-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -373,7 +427,6 @@
             font-size: 1rem;
         }
 
-        /* Contact Section */
         #contact {
             background: var(--bg-surface);
             border-radius: 16px;
@@ -382,7 +435,6 @@
             overflow: hidden;
         }
 
-        /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
             padding: 80px 0 40px 0;
@@ -444,7 +496,6 @@
             padding-top: 40px;
         }
 
-        /* Form Inputs */
         .form-label {
             display: block; 
             color: white; 
@@ -548,20 +599,32 @@
         </div>
     </div>
 
-    <!-- Trusted By Section -->
-    <div style="background: linear-gradient(90deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05)); padding: 40px 0; border-bottom: 1px solid var(--border-color);">
-        <div class="container">
+    <!-- Sponsors Marquee Section -->
+    <div class="marquee-wrapper">
+        <div class="container" style="position: relative; z-index: 3;">
             <div style="text-align: center; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">
-                Trusted by innovative engineering firms globally
+                Proudly Sponsored & Contributed By
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; opacity: 0.5;">
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fab fa-aws"></i> AWS</div>
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fab fa-microsoft"></i> Microsoft</div>
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fab fa-building"></i> BuildCore</div>
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fab fa-github"></i> GitHub</div>
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fas fa-drafting-compass"></i> DraftTech</div>
-                <div style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 8px; filter: grayscale(100%);"><i class="fas fa-city"></i> CityEng</div>
-            </div>
+        </div>
+        <!-- Duplicated list inside max-content track to allow smooth -50% translation -->
+        <div class="marquee-track">
+            <!-- SET 1 -->
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="marquee-item"><i class="fab fa-microsoft"></i> Microsoft</div>
+            <div class="marquee-item"><i class="fab fa-building"></i> BuildCore</div>
+            <div class="marquee-item"><i class="fab fa-github"></i> GitHub</div>
+            <div class="marquee-item"><i class="fas fa-drafting-compass"></i> DraftTech</div>
+            <div class="marquee-item"><i class="fas fa-city"></i> CityEng</div>
+            <div class="marquee-item"><i class="fas fa-code-branch"></i> OpenSource</div>
+            
+            <!-- SET 2 (Exact Clone for seamless loop) -->
+            <div class="marquee-item"><i class="fab fa-aws"></i> AWS</div>
+            <div class="marquee-item"><i class="fab fa-microsoft"></i> Microsoft</div>
+            <div class="marquee-item"><i class="fab fa-building"></i> BuildCore</div>
+            <div class="marquee-item"><i class="fab fa-github"></i> GitHub</div>
+            <div class="marquee-item"><i class="fas fa-drafting-compass"></i> DraftTech</div>
+            <div class="marquee-item"><i class="fas fa-city"></i> CityEng</div>
+            <div class="marquee-item"><i class="fas fa-code-branch"></i> OpenSource</div>
         </div>
     </div>
 
