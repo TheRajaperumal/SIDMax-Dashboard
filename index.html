@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIDMax Rebar Detailing - The Future of Drafting Automation</title>
+    <!-- FontAwesome for Line Art Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
 
@@ -33,13 +35,25 @@
             padding: 0 20px;
         }
 
-        /* Navigation */
+        /* Sticky Navigation */
         nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .nav-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .logo {
@@ -82,10 +96,6 @@
             transition: color 0.3s;
         }
 
-        .nav-right a:hover {
-            color: var(--primary);
-        }
-
         .btn-signup {
             background-color: var(--primary);
             color: white !important;
@@ -103,7 +113,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 100px 0;
+            padding: 80px 0;
             gap: 50px;
         }
 
@@ -163,6 +173,48 @@
             box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
         }
 
+        /* Rolling Stats Section */
+        .stats-section {
+            padding: 60px 0;
+            background: rgba(20, 27, 45, 0.5);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .stats-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: var(--text-main);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            background: linear-gradient(45deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
         /* Info Section */
         .section-header {
             text-align: center;
@@ -189,11 +241,6 @@
             padding: 30px;
             margin-bottom: 40px;
             transition: transform 0.3s;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(96, 165, 250, 0.3);
         }
 
         .category-title {
@@ -226,6 +273,13 @@
 
         tr:last-child td {
             border-bottom: none;
+        }
+
+        .cmd-icon-cell {
+            width: 40px;
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.2rem;
         }
 
         .cmd-name {
@@ -302,48 +356,33 @@
             padding-top: 30px;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 60px 0;
-            }
-            .hero p {
-                margin: 0 auto 30px auto;
-            }
-            .nav-center {
-                display: none;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
+            .hero { flex-direction: column; text-align: center; padding: 40px 0; }
+            .nav-center { display: none; }
+            .stats-grid { grid-template-columns: 1fr; gap: 40px; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            table, thead, tbody, th, td, tr { display: block; }
             th { display: none; }
-            td {
-                padding: 10px 0;
-                border: none;
-            }
-            td:first-child { font-size: 1.2rem; margin-top: 15px; }
-            tr { border-bottom: 1px solid var(--border-color); }
+            td { padding: 10px 0; border: none; }
+            .cmd-icon-cell { display: inline-block; width: auto; padding-right: 10px; }
+            tr { border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; }
         }
     </style>
 </head>
 <body>
-    <nav class="container">
-        <div class="logo">SIDMax.</div>
-        <div class="nav-center">
-            <a href="#features">Features</a>
-            <a href="#commands">Commands</a>
-            <a href="roadmap.html">Roadmap</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="nav-right">
-            <a href="#login" class="btn-login">Log in</a>
-            <a href="#signup" class="btn-signup">Sign Up</a>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">SIDMax.</div>
+            <div class="nav-center">
+                <a href="#features">Features</a>
+                <a href="#commands">Commands</a>
+                <a href="roadmap.html">Roadmap</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="#login" class="btn-login">Log in</a>
+                <a href="#signup" class="btn-signup">Sign Up</a>
+            </div>
         </div>
     </nav>
 
@@ -352,37 +391,61 @@
         <div class="hero">
             <div class="hero-content">
                 <h1>Detail Faster. <br><span>Build Smarter.</span></h1>
-                <p>SIDMax is the ultimate automation toolset for structural engineering and rebar detailing within AutoCAD environments. Reduce your detailing time by up to 70% while completely eliminating manual calculation errors.</p>
+                <p>SIDMax is the ultimate drafting software for AutoCAD and RebarCAD environments. Reduce your detailing time by up to 70% while perfectly automating rebar arrays, callouts, and structural dimensions.</p>
                 <a href="#commands" class="cta-btn">Explore Commands</a>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800" alt="Architectural Blueprints">
+                <!-- Drafting / AutoCAD specific image -->
+                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800" alt="CAD Drafting Interface">
             </div>
         </div>
+    </div>
 
+    <!-- Rolling Stats Section -->
+    <div class="stats-section">
+        <div class="container">
+            <div class="stats-title">Thousands of data points turned into flawless structural detailing.</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="counter" data-target="2500">0</h3><span style="font-size: 3rem; font-weight: 800; color: #10b981; position: relative; top: -10px;">+</span>
+                    <p>Active Detailers</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="89">0</h3><span style="font-size: 3rem; font-weight: 800; color: #10b981; position: relative; top: -10px;">+</span>
+                    <p>Automation Commands</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="70">0</h3><span style="font-size: 3rem; font-weight: 800; color: #10b981; position: relative; top: -10px;">%</span>
+                    <p>Time Reduced</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
         <!-- Automation & Time Saving -->
         <div id="features" class="section-header">
-            <h2>The Power of Automation</h2>
-            <p>Why spend hours manually counting lines, aligning text, and calculating overlaps when SIDMax can do it in seconds?</p>
+            <h2>Drafting Automation</h2>
+            <p>Built specifically for AutoCAD and structural detailers to completely eliminate repetitive workflows.</p>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 80px;">
             <div style="background: var(--bg-surface); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color);">
-                <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&q=80&w=600" alt="Time Savings" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
-                <h3 style="color: white; margin-top: 0;">⏳ Massive Time Reduction</h3>
-                <p style="color: var(--text-muted); margin-bottom: 0;">Tasks that used to take days—like placing continuous elevation tags or generating complex rebar arrays—are now reduced to a single click. Let the software handle the tedious work.</p>
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=600" alt="Structural Blueprints" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: white; margin-top: 0;">⏳ Instant Rebar Detailing</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Tasks that used to take days—like placing continuous elevation tags or generating complex rebar arrays—are now reduced to a single click.</p>
             </div>
             <div style="background: var(--bg-surface); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color);">
-                <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&q=80&w=600" alt="Accuracy" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
-                <h3 style="color: white; margin-top: 0;">🎯 Zero Calculation Errors</h3>
-                <p style="color: var(--text-muted); margin-bottom: 0;">Eliminate human error entirely. Built-in calculators automatically total lengths and convert units on the fly, ensuring your bar quantities and schedules are perfectly accurate.</p>
+                <img src="https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&q=80&w=600" alt="Construction Site" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: white; margin-top: 0;">🎯 Flawless Accuracy</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Eliminate human error entirely. Built-in calculators automatically total lengths and convert units on the fly, ensuring your bar schedules are perfect.</p>
             </div>
         </div>
 
         <!-- Commands Reference -->
         <div id="commands" class="section-header">
             <h2>Command Reference</h2>
-            <p>Explore the comprehensive suite of tools included in the SIDMax package.</p>
+            <p>Explore the graphical directory of all tools included in the SIDMax package.</p>
         </div>
 
 
@@ -391,6 +454,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -399,6 +463,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-broom"></i></td>
                         <td><div class="cmd-name">PurgeAll</div></td>
                         <td><div class="cmd-alias">PP</div></td>
                         <td><div class="cmd-desc">Executes the PURGE command multiple times in succession to clean all unreferenced named objects from the drawing.</div></td>
@@ -413,6 +478,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -421,48 +487,56 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">Quickshortcuts</div></td>
                         <td><div class="cmd-alias">QS, QUICKSHORTCUTS</div></td>
                         <td><div class="cmd-desc">Prints a menu listing custom command shortcuts and their associated actions in the command window history.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenTeamFolder</div></td>
                         <td><div class="cmd-alias">RP</div></td>
                         <td><div class="cmd-desc">Opens the network team RP folder directory in Windows File Explorer.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenLocalFolder</div></td>
                         <td><div class="cmd-alias">RL</div></td>
                         <td><div class="cmd-desc">Opens the local RP folder directory in Windows File Explorer.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenExcelLog</div></td>
                         <td><div class="cmd-alias">RRR</div></td>
                         <td><div class="cmd-desc">Opens the Team-RP Excel log file located on the network drive.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenDispatchSchedule</div></td>
                         <td><div class="cmd-alias">DISPATCH</div></td>
                         <td><div class="cmd-desc">Calculates the current month and year to open the corresponding dispatch schedule folder in Windows File Explorer.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
                         <td><div class="cmd-name">OpenCalculator</div></td>
                         <td><div class="cmd-alias">WW</div></td>
                         <td><div class="cmd-desc">Launches the standard Windows Calculator application.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenLapSchedule</div></td>
                         <td><div class="cmd-alias">LAP</div></td>
                         <td><div class="cmd-desc">Opens the ACI 318-95 lap schedule reference document in PDF format.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">OpenCanadianStandard</div></td>
                         <td><div class="cmd-alias">CANSTD</div></td>
                         <td><div class="cmd-desc">Opens the Canadian Reinforcing Steel Manual of Standard Practice reference document in PDF format.</div></td>
@@ -477,6 +551,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -485,12 +560,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">DrawingHistory</div></td>
                         <td><div class="cmd-alias">HIST, HISTORY</div></td>
                         <td><div class="cmd-desc">Displays a formatted table in the text window showing recent DWG files in the current folder along with save times and open status.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
                         <td><div class="cmd-name">BatchOpenRecent</div></td>
                         <td><div class="cmd-alias">OPENREC, OPENLAST, MRUDTTOPEN, OPENHIST</div></td>
                         <td><div class="cmd-desc">Batch opens recent DWG files found in the current drawing directory up to a specified count.</div></td>
@@ -505,6 +582,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -513,6 +591,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">InitializeUserVars</div></td>
                         <td><div class="cmd-alias">USER_VAR</div></td>
                         <td><div class="cmd-desc">Loads custom LISP utilities, configures drafting system variables, turns on all layers, and sets the current layer to 0.</div></td>
@@ -527,6 +606,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -535,6 +615,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">SmartCopy</div></td>
                         <td><div class="cmd-alias">C1</div></td>
                         <td><div class="cmd-desc"></div></td>
@@ -549,6 +630,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -557,24 +639,28 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
                         <td><div class="cmd-name">OffsetImperial</div></td>
                         <td><div class="cmd-alias">OI</div></td>
                         <td><div class="cmd-desc">Performs an offset operation converting user input provided in feet, inches, or decimal format to millimeters.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
                         <td><div class="cmd-name">OffsetMetersToInches</div></td>
                         <td><div class="cmd-alias">OM</div></td>
                         <td><div class="cmd-desc">Performs an offset operation converting the specified offset distance from meters to inches.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
                         <td><div class="cmd-name">OffsetMillimetersToInches</div></td>
                         <td><div class="cmd-alias">OMM</div></td>
                         <td><div class="cmd-desc">Performs an offset operation converting the specified offset distance from millimeters to inches.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
                         <td><div class="cmd-name">MultipleOffset</div></td>
                         <td><div class="cmd-alias">Q1</div></td>
                         <td><div class="cmd-desc">Creates multiple offsets or a range of offsets for a selected entity on a picked side and spacing distance.</div></td>
@@ -589,6 +675,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -597,12 +684,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-cut"></i></td>
                         <td><div class="cmd-name">BreakLine</div></td>
                         <td><div class="cmd-alias">CUTLINE, BREAKLINE, BL</div></td>
                         <td><div class="cmd-desc">Draws a breakline cut symbol with a preset size parameter of 10.0.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-cut"></i></td>
                         <td><div class="cmd-name">BreakLineLarge</div></td>
                         <td><div class="cmd-alias">CUT2, BL2</div></td>
                         <td><div class="cmd-desc">Draws a breakline cut symbol with a preset size parameter of 20.0.</div></td>
@@ -617,6 +706,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -625,6 +715,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-layer-group"></i></td>
                         <td><div class="cmd-name">TilemodeCover</div></td>
                         <td><div class="cmd-alias">`, CV, V, COV, TILECOVER, COVER</div></td>
                         <td><div class="cmd-desc">Assigns implied, recent, or last created entities to the designated COVER layer without selection highlighting.</div></td>
@@ -639,6 +730,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -647,6 +739,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
                         <td><div class="cmd-name">ElevationMarker</div></td>
                         <td><div class="cmd-alias">EM</div></td>
                         <td><div class="cmd-desc">Draws an elevation callout polyline and creates TEXT indicating the Y-coordinate elevation at a picked point.</div></td>
@@ -661,6 +754,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -669,6 +763,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextBox</div></td>
                         <td><div class="cmd-alias">RTB</div></td>
                         <td><div class="cmd-desc">Draws rounded rectangular boundary polyline boxes around selected TEXT and MTEXT entities.</div></td>
@@ -683,6 +778,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -691,96 +787,112 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextToUpper</div></td>
                         <td><div class="cmd-alias">UP</div></td>
                         <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to uppercase.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextToLower</div></td>
                         <td><div class="cmd-alias">LO</div></td>
                         <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to lowercase.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextToTitle</div></td>
                         <td><div class="cmd-alias">TC</div></td>
                         <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to Title Case.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextToSentence</div></td>
                         <td><div class="cmd-alias">SNC</div></td>
                         <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to Sentence case.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextCopy</div></td>
                         <td><div class="cmd-alias">TT</div></td>
                         <td><div class="cmd-desc">Copies the text content from a selected source text object to multiple destination text entities.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextJustifyVertical</div></td>
                         <td><div class="cmd-alias">TJV</div></td>
                         <td><div class="cmd-desc">Collects text from selected entities, sorts them vertically by coordinates, and outputs the joined text.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextJustifyHorizontal</div></td>
                         <td><div class="cmd-alias">TJX</div></td>
                         <td><div class="cmd-desc">Collects text from selected entities, sorts them horizontally by coordinates, and outputs the joined text.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">AlignTextX</div></td>
                         <td><div class="cmd-alias">MX</div></td>
                         <td><div class="cmd-desc">Aligns selected TEXT and MTEXT entities horizontally to a picked X-axis coordinate point.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">AlignTextY</div></td>
                         <td><div class="cmd-alias">MY</div></td>
                         <td><div class="cmd-desc">Aligns selected TEXT and MTEXT entities vertically to a picked Y-axis coordinate point.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextSwap</div></td>
                         <td><div class="cmd-alias">TSW</div></td>
                         <td><div class="cmd-desc">Swaps the text content between two selected text entities.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextRotate90</div></td>
                         <td><div class="cmd-alias">RX</div></td>
                         <td><div class="cmd-desc">Rotates selected text objects interactively by 90 degrees clockwise.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextReplace</div></td>
                         <td><div class="cmd-alias">TXR</div></td>
                         <td><div class="cmd-desc">Replaces specified text strings in selected or drawing-wide text entities using whole or partial string matching.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextToMtext</div></td>
                         <td><div class="cmd-alias">T2M</div></td>
                         <td><div class="cmd-desc">Converts selected single-line TEXT entities into MTEXT entities while preserving orientation and insertion points.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">MtextToText</div></td>
                         <td><div class="cmd-alias">M2T</div></td>
                         <td><div class="cmd-desc">Explodes selected MTEXT entities into single-line TEXT entities.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextPrepend</div></td>
                         <td><div class="cmd-alias">TPRE</div></td>
                         <td><div class="cmd-desc">Prepends a user-specified text string prefix to selected TEXT, MTEXT, or ATTRIB entities.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextAppend</div></td>
                         <td><div class="cmd-alias">TSUF</div></td>
                         <td><div class="cmd-desc">Appends a user-specified text suffix to all selected TEXT, MTEXT, or ATTRIB entities.</div></td>
@@ -795,6 +907,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -803,6 +916,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">ReplaceTextWithBlock</div></td>
                         <td><div class="cmd-alias">REP-TXBK</div></td>
                         <td><div class="cmd-desc">Replaces selected TEXT entities with a specified block reference placed at the text insertion point and rotation.</div></td>
@@ -817,6 +931,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -825,6 +940,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">MatchTextStyle</div></td>
                         <td><div class="cmd-alias">TDS</div></td>
                         <td><div class="cmd-desc">Sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.</div></td>
@@ -839,6 +955,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -847,6 +964,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
                         <td><div class="cmd-name">SpotElevation</div></td>
                         <td><div class="cmd-alias">SPOTEL</div></td>
                         <td><div class="cmd-desc">Calculates elevations at picked points within a bounded grading region and places elevation marker blocks and text.</div></td>
@@ -861,6 +979,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -869,18 +988,21 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
                         <td><div class="cmd-name">ElevationModeToggle</div></td>
                         <td><div class="cmd-alias">BTMODE</div></td>
                         <td><div class="cmd-desc">Configures and displays the global elevation display mode setting between Imperial fractional feet-inches and Metric values.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
                         <td><div class="cmd-name">ElevationTag</div></td>
                         <td><div class="cmd-alias">BT</div></td>
                         <td><div class="cmd-desc">Places continuous elevation tags formatted as fractional feet-inches or whole millimeters depending on the active unit mode.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
                         <td><div class="cmd-name">ElevationTagDecimal</div></td>
                         <td><div class="cmd-alias">BD</div></td>
                         <td><div class="cmd-desc">Places continuous elevation tags formatted as decimal feet or decimal meters depending on the active unit mode.</div></td>
@@ -895,6 +1017,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -903,12 +1026,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextReport</div></td>
                         <td><div class="cmd-alias">TREPORT</div></td>
                         <td><div class="cmd-desc">Counts and generates a command-line summary report of footing mark text and block objects across selected drawing regions.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextReportSettings</div></td>
                         <td><div class="cmd-alias">TREPORT_SETTING</div></td>
                         <td><div class="cmd-desc">Configures settings for the TREPORT command, including match prefix and object types.</div></td>
@@ -923,6 +1048,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -931,6 +1057,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">SequentialText</div></td>
                         <td><div class="cmd-alias">SEQTXT</div></td>
                         <td><div class="cmd-desc">Creates sequentially numbered text entities at picked locations with configurable increments and optional entity grouping.</div></td>
@@ -945,6 +1072,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -953,30 +1081,35 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-align-left"></i></td>
                         <td><div class="cmd-name">LabelAlignLeft</div></td>
                         <td><div class="cmd-alias">LBL</div></td>
                         <td><div class="cmd-desc">Left-aligns selected text entities relative to a picked reference X-coordinate.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-align-left"></i></td>
                         <td><div class="cmd-name">LabelAlignRight</div></td>
                         <td><div class="cmd-alias">LBR</div></td>
                         <td><div class="cmd-desc">Right-aligns selected text entities relative to a picked reference X-coordinate.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">LabelStackLeft</div></td>
                         <td><div class="cmd-alias">1</div></td>
                         <td><div class="cmd-desc">Left-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">LabelStackRight</div></td>
                         <td><div class="cmd-alias">2</div></td>
                         <td><div class="cmd-desc">Right-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">LabelLeader</div></td>
                         <td><div class="cmd-alias">33</div></td>
                         <td><div class="cmd-desc">Draws a detail leader line with a circle marker at the origin point on the 0-25text layer.</div></td>
@@ -991,6 +1124,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -999,6 +1133,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">MatchTextStyle</div></td>
                         <td><div class="cmd-alias">TDS</div></td>
                         <td><div class="cmd-desc">Sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.</div></td>
@@ -1013,6 +1148,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1021,12 +1157,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ToggleSpace</div></td>
                         <td><div class="cmd-alias">V</div></td>
                         <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
                         <td><div class="cmd-name">ToggleRebarLayers</div></td>
                         <td><div class="cmd-alias">`Q</div></td>
                         <td><div class="cmd-desc">Turns off the Rebars, Rangelay, Bar-Lbl, and 0-25text layers when executed in Model space.</div></td>
@@ -1041,6 +1179,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1049,12 +1188,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ResetVariables</div></td>
                         <td><div class="cmd-alias">RESET_ATN</div></td>
                         <td><div class="cmd-desc">Resets system variables CMDECHO, BLIPMODE, and FILEDIA to 1 and executes the APLOT command.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">R14PlotSetup</div></td>
                         <td><div class="cmd-alias">R14PLOT</div></td>
                         <td><div class="cmd-desc">Sets layer to 0, resets plotting system variables, zooms to drawing extents, and triggers drawing plotting.</div></td>
@@ -1069,6 +1210,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1077,6 +1219,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">PrintAllLayouts</div></td>
                         <td><div class="cmd-alias">PA</div></td>
                         <td><div class="cmd-desc">Plots all paper space layouts to PDF using the DWG To PDF.pc3 printer configuration and monochrome plot style.</div></td>
@@ -1091,6 +1234,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1099,12 +1243,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">InteractiveLineCountMode</div></td>
                         <td><div class="cmd-alias">ILCMODE</div></td>
                         <td><div class="cmd-desc">Toggles the operational mode of the Interactive Line Count command between POPUP dialog and COMMAND line modes.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">InteractiveLineCount</div></td>
                         <td><div class="cmd-alias">ILC</div></td>
                         <td><div class="cmd-desc">Executes the Interactive Line Count routine using either interactive popup dialog or command-line mode based on current mode settings.</div></td>
@@ -1119,6 +1265,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1127,6 +1274,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ToggleSpace</div></td>
                         <td><div class="cmd-alias">V</div></td>
                         <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
@@ -1141,6 +1289,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1149,6 +1298,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ToggleSpace</div></td>
                         <td><div class="cmd-alias">V</div></td>
                         <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
@@ -1163,6 +1313,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1171,6 +1322,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ToggleSpace</div></td>
                         <td><div class="cmd-alias">V</div></td>
                         <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
@@ -1185,6 +1337,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1193,6 +1346,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">ZoomExtentsAll</div></td>
                         <td><div class="cmd-alias">ZOOME</div></td>
                         <td><div class="cmd-desc">Zooms to extents across all active viewports in Paper Space or Model Space.</div></td>
@@ -1207,6 +1361,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1215,18 +1370,21 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
                         <td><div class="cmd-name">RevisionCloud</div></td>
                         <td><div class="cmd-alias">CLOUD, REVCLOUD, RC</div></td>
                         <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 20.0.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
                         <td><div class="cmd-name">RevisionCloudSmall</div></td>
                         <td><div class="cmd-alias">RC2</div></td>
                         <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 10.0.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
                         <td><div class="cmd-name">RevisionCloudLarge</div></td>
                         <td><div class="cmd-alias">RC3</div></td>
                         <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 30.0.</div></td>
@@ -1241,6 +1399,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1249,6 +1408,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
                         <td><div class="cmd-name">ArrayRebar</div></td>
                         <td><div class="cmd-alias">ARARR</div></td>
                         <td><div class="cmd-desc">Generates a linear array of line segments within a closed boundary polygon while trimming around internal opening boundaries.</div></td>
@@ -1263,6 +1423,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1271,6 +1432,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">AreaLabeling</div></td>
                         <td><div class="cmd-alias">AL</div></td>
                         <td><div class="cmd-desc">Initializes environment settings and executes the main Area Labeling main routine.</div></td>
@@ -1285,6 +1447,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1293,6 +1456,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">DowelCorner</div></td>
                         <td><div class="cmd-alias">DC, DOWELCORNER</div></td>
                         <td><div class="cmd-desc">Detects corner intersections between selected wall or slab edges within an angle range and places dowel donut markers at offset locations.</div></td>
@@ -1307,6 +1471,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1315,6 +1480,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">DowelRun</div></td>
                         <td><div class="cmd-alias">DOWEL</div></td>
                         <td><div class="cmd-desc">Places donut markers on the REBARS layer at regular spacing intervals along selected connected curve entities.</div></td>
@@ -1329,6 +1495,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1337,6 +1504,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
                         <td><div class="cmd-name">StockBarCalc</div></td>
                         <td><div class="cmd-alias">STC</div></td>
                         <td><div class="cmd-desc">Calculates total rebar length from specified distances, polyline entities, or drawn points for structural lap length evaluation.</div></td>
@@ -1351,6 +1519,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1359,6 +1528,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
                         <td><div class="cmd-name">RebarCalloutConverter</div></td>
                         <td><div class="cmd-alias">RBX</div></td>
                         <td><div class="cmd-desc">Parses selected rebar text descriptors and reformats the text into a standardized rebar callout string.</div></td>
@@ -1373,6 +1543,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1381,6 +1552,7 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
                         <td><div class="cmd-name">DonutPlacer</div></td>
                         <td><div class="cmd-alias">DNR</div></td>
                         <td><div class="cmd-desc">Draws a linear array of donut entities on the COVER layer representing rebar dot ranges at a specified spacing.</div></td>
@@ -1395,6 +1567,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1403,12 +1576,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">InteractiveLineCountMode</div></td>
                         <td><div class="cmd-alias">ILCMODE</div></td>
                         <td><div class="cmd-desc">Toggles the operational mode of the Interactive Line Count command between POPUP dialog and COMMAND line modes.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">InteractiveLineCount</div></td>
                         <td><div class="cmd-alias">ILC</div></td>
                         <td><div class="cmd-desc">Executes the Interactive Line Count routine using either interactive popup dialog or command-line mode based on current mode settings.</div></td>
@@ -1423,6 +1598,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1431,12 +1607,14 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextCalculator</div></td>
                         <td><div class="cmd-alias">TCL</div></td>
                         <td><div class="cmd-desc">Launches the interactive Text Calculator interface.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
                         <td><div class="cmd-name">TextCalculatorDialog</div></td>
                         <td><div class="cmd-alias">TEXTCALC</div></td>
                         <td><div class="cmd-desc">Opens a dialog calculator to perform arithmetic operations on numerical text entities and place the resulting MTEXT in the drawing.</div></td>
@@ -1451,6 +1629,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1459,18 +1638,21 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
                         <td><div class="cmd-name">SmartSearchMode</div></td>
                         <td><div class="cmd-alias">SSMODE</div></td>
                         <td><div class="cmd-desc">Configures search matching behavior including match mode and case sensitivity for the smart search command.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
                         <td><div class="cmd-name">SmartSearch</div></td>
                         <td><div class="cmd-alias">SMARTSEARCH</div></td>
                         <td><div class="cmd-desc">Launches the smart search dialog interface.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
                         <td><div class="cmd-name">SmartSearchExecute</div></td>
                         <td><div class="cmd-alias">SMSE</div></td>
                         <td><div class="cmd-desc">Displays a search dialog to query, filter, highlight, or isolate text and entity properties drawing-wide or within a selection.</div></td>
@@ -1485,6 +1667,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1493,18 +1676,21 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
                         <td><div class="cmd-name">Totlenmtm</div></td>
                         <td><div class="cmd-alias">10</div></td>
                         <td><div class="cmd-desc">Calculates the total combined length of selected LINE, ARC, POLYLINE, LWPOLYLINE, and SPLINE entities and displays the result in meters in an alert dialog.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
                         <td><div class="cmd-name">Totlenmtmm</div></td>
                         <td><div class="cmd-alias">11</div></td>
                         <td><div class="cmd-desc">Calculates the combined length of selected LINE, ARC, POLYLINE, LWPOLYLINE, and SPLINE entities and displays the result formatted to two decimal places in millimeters in an alert dialog.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
                         <td><div class="cmd-name">Totlenimftinch</div></td>
                         <td><div class="cmd-alias">12</div></td>
                         <td><div class="cmd-desc">Calculates and displays the cumulative total length of selected line, arc, polyline, and spline entities in feet and inches.</div></td>
@@ -1519,6 +1705,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th width="5%"></th>
                         <th width="20%">Command</th>
                         <th width="15%">Alias</th>
                         <th>Description</th>
@@ -1527,30 +1714,35 @@
                 <tbody>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">PolylineClose</div></td>
                         <td><div class="cmd-alias">PC</div></td>
                         <td><div class="cmd-desc">Closes all selected open LWPOLYLINE entities.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">PolylineJoin</div></td>
                         <td><div class="cmd-alias">PJ, PEJ</div></td>
                         <td><div class="cmd-desc">Joins selected open lines, arcs, and polylines into contiguous polyline entities using the PEDIT command.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
                         <td><div class="cmd-name">PolylineWidth</div></td>
                         <td><div class="cmd-alias">PW</div></td>
                         <td><div class="cmd-desc">Sets the constant width property of all selected LWPOLYLINE entities to a specified global value.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-layer-group"></i></td>
                         <td><div class="cmd-name">XLineCover</div></td>
                         <td><div class="cmd-alias">XL</div></td>
                         <td><div class="cmd-desc">Sets the current layer to COVER and executes the XLINE command to draw construction lines.</div></td>
                     </tr>
 
                     <tr>
+                        <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
                         <td><div class="cmd-name">XLineOffset</div></td>
                         <td><div class="cmd-alias">XO</div></td>
                         <td><div class="cmd-desc">Invokes the XLINE command directly in Offset mode.</div></td>
@@ -1562,13 +1754,65 @@
 
     </div>
 
+    <!-- Contact Section -->
+    <div id="contact" class="container" style="margin-bottom: 80px; padding-top: 40px;">
+        <div style="display: flex; gap: 50px; flex-wrap: wrap;">
+            <div style="flex: 1.2; min-width: 300px; background: var(--bg-surface); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <h3 style="color: #a78bfa; margin-top: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">CONTACT US</h3>
+                <h2 style="font-size: 2.5rem; margin-top: 10px; margin-bottom: 20px;">Get in touch with sales</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">We'll help you find the right solutions and pricing for your business. Fill out the form below and our team will get back to you shortly.</p>
+                <form>
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <label style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">First name</label>
+                            <input type="text" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; box-sizing: border-box;">
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <label style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Last name</label>
+                            <input type="text" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; box-sizing: border-box;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Work email</label>
+                        <input type="email" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; box-sizing: border-box;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Message</label>
+                        <textarea rows="4" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; resize: vertical; box-sizing: border-box;"></textarea>
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <label style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Country</label>
+                        <select style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; box-sizing: border-box;">
+                            <option style="background: var(--bg-surface);">India</option>
+                            <option style="background: var(--bg-surface);">United States</option>
+                            <option style="background: var(--bg-surface);">United Kingdom</option>
+                            <option style="background: var(--bg-surface);">Australia</option>
+                            <option style="background: var(--bg-surface);">Canada</option>
+                            <option style="background: var(--bg-surface);">United Arab Emirates</option>
+                        </select>
+                    </div>
+                    <button type="button" style="width: 100%; padding: 15px; background: #c2f55c; color: #0f172a; border: none; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: opacity 0.3s; box-shadow: 0 4px 15px rgba(194, 245, 92, 0.2);">Send message</button>
+                </form>
+            </div>
+            <div style="flex: 1; min-width: 300px; padding: 40px 0;">
+                <h2 style="font-size: 2rem; margin-top: 0;">Product and account support</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.1rem;">Always open for business. Find answers to common questions in our knowledge base.</p>
+                <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600; display: inline-block; margin-bottom: 50px;">Visit Help Center &rarr;</a>
+                
+                <h2 style="font-size: 2rem;">Talk with us</h2>
+                <p style="color: var(--text-muted); margin-bottom: 5px; font-size: 1.1rem;">Give us a call at <strong style="color: white;">1-800-SID-MAX1</strong></p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Available Mon-Fri, 9am-6pm IST (Excluding holidays)</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>About SIDMax</h4>
-                    <p>SIDMax is a cutting-edge suite of AutoCAD tools designed specifically to streamline structural engineering and rebar detailing workflows. Built to save time, reduce errors, and increase profitability.</p>
+                    <p>SIDMax is a cutting-edge suite of AutoCAD and RebarCAD drafting tools designed specifically to streamline structural engineering and rebar detailing workflows.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Author & Contact</h4>
@@ -1596,5 +1840,45 @@
             </div>
         </div>
     </footer>
+
+    <!-- Rolling Numbers Script -->
+    <script>
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200; // lower is faster
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/,/g, '');
+                    
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc).toLocaleString();
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Trigger animation when scrolled into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    </script>
 </body>
 </html>
