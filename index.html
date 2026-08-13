@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIDMax Rebar Detailing - Features & Commands</title>
+    <title>SIDMax Rebar Detailing - The Future of Drafting Automation</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
@@ -23,54 +23,125 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
         }
 
         .container {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .header {
+        /* Hero Section */
+        .hero {
             text-align: center;
-            margin-bottom: 50px;
+            padding: 80px 20px;
             animation: fadeInDown 0.8s ease-out;
         }
 
-        .header h1 {
-            font-size: 3.5rem;
+        .hero h1 {
+            font-size: 4rem;
             font-weight: 800;
             background: -webkit-linear-gradient(45deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            line-height: 1.2;
+            margin-bottom: 20px;
+            line-height: 1.1;
         }
 
-        .header p {
+        .hero p {
             color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
         }
         
-        .nav-links {
+        .roadmap-link {
+            display: block;
             margin-top: 20px;
-        }
-        .nav-links a {
             color: var(--accent-hover);
             text-decoration: none;
             font-weight: 600;
-            margin: 0 10px;
-        }
-        .nav-links a:hover {
-            text-decoration: underline;
         }
 
+        /* Story & Benefits Grid */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 60px 0 30px 0;
+            color: #f8fafc;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #a78bfa;
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .story-container {
+            background: rgba(30, 41, 59, 0.4);
+            border-left: 4px solid var(--accent);
+            padding: 30px;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 60px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        /* Command Table */
         .category-section {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -78,7 +149,6 @@
             padding: 30px;
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         .category-header h3 {
@@ -106,10 +176,6 @@
             font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
         }
 
         tr:hover td {
@@ -147,13 +213,44 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>SIDMax Rebar Detailing</h1>
-            <p>The ultimate automation toolset for structural engineering, drafting, and rebar detailing within AutoCAD-like environments. Experience unmatched speed and precision.</p>
-            <div class="nav-links">
-                <a href="roadmap.html">View Development Roadmap &rarr;</a>
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Detail Faster. <br>Build Smarter.</h1>
+            <p>SIDMax is the ultimate automation toolset for structural engineering and rebar detailing within AutoCAD environments. Reduce your detailing time by up to 70% while completely eliminating manual calculation errors.</p>
+            <a href="#commands" class="cta-button">Explore Features</a>
+            <a href="roadmap.html" class="roadmap-link">View Development Roadmap &rarr;</a>
+        </div>
+
+        <!-- The Story -->
+        <h2 class="section-title">The Problem With Traditional Detailing</h2>
+        <div class="story-container">
+            <p>For decades, structural drafters and detailers have faced a painfully repetitive workflow. Drawing individual rebars, manually calculating lap lengths, visually counting lines for Bar Bending Schedules, and constantly realigning text after revisions. A single architectural change can trigger hours of tedious, error-prone rework.</p>
+            <p><strong>SIDMax changes the paradigm.</strong> Built by engineers for engineers, SIDMax acts as a smart layer on top of your existing CAD environment. It understands structural elements—it doesn't just see lines and text; it sees reinforcement arrays, dowels, and boundaries. By automating the mechanical aspects of drafting, SIDMax allows detailers to focus on what actually matters: structural integrity and design intent.</p>
+        </div>
+
+        <!-- Benefits Grid -->
+        <h2 class="section-title">Why Choose SIDMax?</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Massive Time Reduction</h3>
+                <p>Turn days of tedious drafting into hours. Tasks like placing continuous elevation tags, generating rebar arrays across boundaries, or calculating complex lap lengths are reduced to a single click.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Zero Calculation Errors</h3>
+                <p>Eliminate human error. SIDMax's built-in calculators automatically total lengths, convert Imperial to Metric on the fly, and ensure your bar quantities are perfectly accurate every single time.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>Smart Automation</h3>
+                <p>Don't just copy and paste. Use our intelligent tools to automatically sort text vertically, swap labels, generate sequential numbering, and instantly replace text blocks without breaking formatting.</p>
             </div>
         </div>
+
+        <!-- Commands Reference -->
+        <h2 id="commands" class="section-title">Command Reference</h2>
 
         <div class="category-section">
             <div class="category-header">
