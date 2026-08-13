@@ -8,19 +8,19 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
         :root {
-            --bg-color: #0f172a;
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-color: #09090b;
+            --glass-bg: #18181b;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #fafafa;
+            --text-muted: #a1a1aa;
             --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --success: #10b981;
+            --accent-hover: #2563eb;
+            --success: #3b82f6;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            background: var(--bg-color);
             color: var(--text-main);
             margin: 0;
             padding: 40px 20px;
@@ -43,10 +43,7 @@
         .header h1 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: -webkit-linear-gradient(45deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: white;
             margin-bottom: 10px;
         }
 
@@ -94,12 +91,12 @@
         }
 
         .progress-bar-fill {
-            background: linear-gradient(90deg, #3b82f6, #10b981);
+            background: var(--accent);
             height: 100%;
             width: 0%;
             border-radius: 6px;
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
 
         .phase-section {
@@ -128,7 +125,7 @@
 
         .phase-header h3 {
             margin: 0;
-            color: #a78bfa;
+            color: white;
             font-size: 1.4rem;
         }
 
@@ -163,8 +160,8 @@
         }
 
         .task-item.completed {
-            background: rgba(16, 185, 129, 0.05);
-            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(59, 130, 246, 0.05);
+            border-color: rgba(59, 130, 246, 0.2);
         }
 
         .task-item.completed .task-title {
@@ -206,7 +203,7 @@
         .checkbox-wrapper input:checked ~ .checkmark {
             background-color: var(--success);
             border-color: var(--success);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
 
         .checkmark:after {
