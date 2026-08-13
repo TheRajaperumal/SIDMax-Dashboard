@@ -10,13 +10,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
 
         :root {
-            --bg-base: #0b0f19;
-            --bg-surface: #141b2d;
+            --bg-base: #18181b; /* Zinc 900 - sleek greyish dark */
+            --bg-surface: #27272a; /* Zinc 800 */
             --primary: #3b82f6;
             --primary-hover: #60a5fa;
             --accent: #8b5cf6;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-main: #fafafa;
+            --text-muted: #a1a1aa;
             --border-color: rgba(255, 255, 255, 0.08);
         }
 
@@ -40,7 +40,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(24, 24, 27, 0.85); /* Zinc 900 with opacity */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 20px 0;
@@ -176,7 +176,7 @@
         /* Rolling Stats Section */
         .stats-section {
             padding: 60px 0;
-            background: rgba(20, 27, 45, 0.5);
+            background: rgba(39, 39, 42, 0.5); /* Zinc 800 half opac */
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
             text-align: center;
@@ -374,6 +374,7 @@
         <div class="nav-inner">
             <div class="logo">SIDMax.</div>
             <div class="nav-center">
+                <a href="#products">Products ▾</a>
                 <a href="#features">Features</a>
                 <a href="#commands">Commands</a>
                 <a href="roadmap.html">Roadmap</a>
@@ -435,10 +436,23 @@
                 <h3 style="color: white; margin-top: 0;">⏳ Instant Rebar Detailing</h3>
                 <p style="color: var(--text-muted); margin-bottom: 0;">Tasks that used to take days—like placing continuous elevation tags or generating complex rebar arrays—are now reduced to a single click.</p>
             </div>
+            
             <div style="background: var(--bg-surface); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color);">
                 <img src="https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&q=80&w=600" alt="Construction Site" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
                 <h3 style="color: white; margin-top: 0;">🎯 Flawless Accuracy</h3>
                 <p style="color: var(--text-muted); margin-bottom: 0;">Eliminate human error entirely. Built-in calculators automatically total lengths and convert units on the fly, ensuring your bar schedules are perfect.</p>
+            </div>
+
+            <div style="background: var(--bg-surface); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color);">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600" alt="Smart Layers" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: white; margin-top: 0;">📂 Smart Organization</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Auto-layer assignment ensures all your text, rebar, and dimensions stay perfectly organized without any manual switching.</p>
+            </div>
+
+            <div style="background: var(--bg-surface); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color);">
+                <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&q=80&w=600" alt="Bar Schedules" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                <h3 style="color: white; margin-top: 0;">📋 Automated Schedules</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0;">Export and generate precise Bar Bending Schedules (BBS) directly from the drawing data with zero manual entry required.</p>
             </div>
         </div>
 
@@ -1828,6 +1842,7 @@
                     <h4>Sitemap</h4>
                     <ul>
                         <li><a href="#top">Home</a></li>
+                        <li><a href="#products">Products</a></li>
                         <li><a href="#features">Features & Automation</a></li>
                         <li><a href="#commands">Command Directory</a></li>
                         <li><a href="roadmap.html">Development Roadmap</a></li>
