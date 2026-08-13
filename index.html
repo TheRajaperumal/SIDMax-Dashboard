@@ -648,6 +648,37 @@
             color: white;
             margin-bottom: 20px;
             display: block;
+            text-decoration: none;
+        }
+
+        /* Social Media Icons */
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
         }
 
         .footer-col h4 {
@@ -737,7 +768,7 @@
 <body>
     <nav>
         <div class="nav-inner">
-            <div class="logo"><i class="fas fa-compass"></i> SIDMax</div>
+            <a href="index.html" class="logo" style="text-decoration: none;"><i class="fas fa-compass"></i> SIDMax</a>
             <div class="nav-center">
                 <a href="#products">Products <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 3px;"></i></a>
                 <a href="#features">Features</a>
@@ -2340,25 +2371,37 @@
 
     <!-- Footer -->
     <footer>
+        <style>
+            .social-links { display: flex; gap: 15px; margin-top: 15px; }
+            .social-icon { color: var(--text-muted); font-size: 1.2rem; transition: color 0.2s; }
+            .social-icon:hover { color: var(--primary); }
+        </style>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col" style="max-width: 400px;">
-                    <a href="#" class="footer-logo"><i class="fas fa-compass" style="color: var(--primary);"></i> SIDMax</a>
+                    <a href="index.html" class="footer-logo"><i class="fas fa-compass" style="color: var(--primary);"></i> SIDMax</a>
                     <p>SIDMax is a cutting-edge suite of AutoCAD and RebarCAD drafting tools designed specifically to streamline structural engineering and detailing workflows.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/TheRajaperumal" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://twitter.com/" target="_blank" class="social-icon" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/" target="_blank" class="social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Author & Contact</h4>
+                    <h4>Author &amp; Contact</h4>
                     <ul>
                         <li><strong style="color: white;">TheRajaperumal</strong></li>
                         <li>Structural Engineering Automation</li>
                         <li>📧 <a href="mailto:contact@example.com">Email Us</a></li>
-                        <li>🐙 <a href="https://github.com/TheRajaperumal">GitHub Profile</a></li>
+                        <li>🐙 <a href="https://github.com/TheRajaperumal" target="_blank">GitHub Profile</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Sitemap</h4>
                     <ul>
-                        <li><a href="#top">Home</a></li>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="#products">Products</a></li>
                         <li><a href="#features">Features</a></li>
                         <li><a href="#commands">Command Directory</a></li>
