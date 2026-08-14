@@ -119,14 +119,9 @@
 
         .hero-wrapper {
             position: relative;
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(90deg, #09090b 20%, rgba(9, 9, 11, 0.8) 50%, rgba(9, 9, 11, 0.1)), 
-                        url('https://images.unsplash.com/photo-1536895058696-a69b1c7ba34d?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             margin-top: -72px;
             padding-top: 72px;
             border-bottom: 1px solid var(--border-color);
@@ -784,7 +779,17 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-wrapper">
+    <div class="hero-wrapper" style="
+        min-height: 95vh;
+        background:
+            linear-gradient(105deg,
+                rgba(9,9,11,0.97) 0%,
+                rgba(9,9,11,0.88) 35%,
+                rgba(9,9,11,0.55) 60%,
+                rgba(9,9,11,0.15) 100%),
+            url('assets/hero_banner.jpg') center center / cover no-repeat;
+        background-attachment: scroll;
+    ">
         <div class="container hero">
             <div class="hero-content">
                 <h1>Detail faster.<br><span>Build smarter.</span></h1>
