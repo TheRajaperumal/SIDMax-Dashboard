@@ -585,6 +585,113 @@
             td { padding: 8px 0; border: none; }
             .cmd-icon-cell { display: inline-block; width: auto; padding-right: 10px; }
             tr { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 16px; margin-bottom: 16px; }
+        /* ===================== ANIMATIONS ===================== */
+
+        /* Page load fade */
+        body { animation: pageFadeIn 0.5s ease forwards; }
+        @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Scroll Reveal */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        }
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        [data-reveal][data-dir="left"] { transform: translateX(-40px); }
+        [data-reveal][data-dir="right"] { transform: translateX(40px); }
+        [data-reveal][data-dir="left"].revealed,
+        [data-reveal][data-dir="right"].revealed { transform: translateX(0); }
+        [data-reveal][data-delay="1"] { transition-delay: 0.1s; }
+        [data-reveal][data-delay="2"] { transition-delay: 0.2s; }
+        [data-reveal][data-delay="3"] { transition-delay: 0.3s; }
+        [data-reveal][data-delay="4"] { transition-delay: 0.4s; }
+        [data-reveal][data-delay="5"] { transition-delay: 0.5s; }
+
+        /* Hero floating orbs */
+        .hero-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+        .orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); opacity: 0.18;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #3b82f6, transparent); top: -100px; right: 5%; animation-duration: 9s; }
+        .orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, #6366f1, transparent); bottom: 10%; right: 25%; animation-duration: 11s; animation-delay: -3s; }
+        .orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, #10b981, transparent); top: 30%; right: 10%; animation-duration: 7s; animation-delay: -5s; opacity: 0.1; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.06); }
+        }
+
+        /* Cursor glow on hero */
+        .hero-cursor-glow {
+            position: absolute; width: 500px; height: 500px;
+            border-radius: 50%; pointer-events: none; z-index: 1;
+            background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: left 0.12s ease, top 0.12s ease;
+        }
+
+        /* Button ripple */
+        .cta-btn, .auth-btn { position: relative; overflow: hidden; }
+        .ripple {
+            position: absolute; border-radius: 50%;
+            transform: scale(0); animation: rippleAnim 0.6s linear;
+            background: rgba(255,255,255,0.25); pointer-events: none;
+        }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+        /* Feature card glow on hover */
+        .feature-card { position: relative; overflow: hidden; }
+        .feature-card::before {
+            content: '';
+            position: absolute; inset: 0; border-radius: 14px;
+            background: radial-gradient(circle at 50% 0%, rgba(59,130,246,0.08), transparent 60%);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .feature-card:hover::before { opacity: 1; }
+
+        /* Stat item count up shimmer */
+        .stat-item h3 {
+            background: linear-gradient(90deg, var(--text-main) 0%, var(--primary) 50%, var(--text-main) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        /* Section header underline draw */
+        .section-header h2 { position: relative; display: inline-block; }
+        .section-header h2::after {
+            content: '';
+            position: absolute; bottom: -8px; left: 0;
+            height: 3px; width: 0;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            border-radius: 2px;
+            transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
+        .section-header.revealed h2::after { width: 100%; }
+
+        /* Nav logo pulse on hover */
+        .logo:hover i { animation: logoPulse 0.6s ease; }
+        @keyframes logoPulse {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.25) rotate(-8deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Platform ratings hover lift */
+        .platform-rating {
+            transition: background 0.2s, transform 0.25s;
+        }
+        .platform-rating:hover {
+            background: var(--bg-base);
+            transform: translateY(-4px);
         }
     </style>
 </head>
@@ -664,14 +771,22 @@
             rgba(9,9,11,0.52) 60%,
             rgba(9,9,11,0.12) 100%),
         url('assets/hero_banner.jpg') center center / cover no-repeat;">
+    <!-- Floating Orbs -->
+    <div class="hero-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <!-- Cursor Glow -->
+    <div class="hero-cursor-glow"></div>
     <div class="container hero">
         <div class="hero-content">
-            <h1>Detail faster.<br><span>Build smarter.</span></h1>
-            <div class="typewriter-wrap">
+            <h1 data-reveal data-delay="1">Detail faster.<br><span>Build smarter.</span></h1>
+            <div class="typewriter-wrap" data-reveal data-delay="2">
                 <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
             </div>
-            <p>SIDMax is the ultimate professional drafting automation suite for AutoCAD and RebarCAD environments. Reduce detailing time by up to 15% with 89+ precision tools.</p>
-            <div>
+            <p data-reveal data-delay="3">SIDMax is the ultimate professional drafting automation suite for AutoCAD and RebarCAD environments. Reduce detailing time by up to 15% with 89+ precision tools.</p>
+            <div data-reveal data-delay="4">
                 <a href="#commands" class="cta-btn">Explore Commands</a>
                 <a href="#contact" class="cta-secondary">Contact Sales</a>
             </div>
@@ -703,21 +818,21 @@
     <div class="container">
         <div class="stats-title">Trusted by engineering firms worldwide</div>
         <div class="stats-grid">
-            <div class="stat-item">
+            <div class="stat-item" data-reveal data-delay="1">
                 <div style="display:flex;justify-content:center;align-items:baseline;gap:4px;margin-bottom:5px;">
                     <h3 class="counter" data-target="2500" style="margin:0;">0</h3>
                     <span class="stat-symbol">+</span>
                 </div>
                 <p>Active Detailers</p>
             </div>
-            <div class="stat-item">
+            <div class="stat-item" data-reveal data-delay="2">
                 <div style="display:flex;justify-content:center;align-items:baseline;gap:4px;margin-bottom:5px;">
                     <h3 class="counter" data-target="89" style="margin:0;">0</h3>
                     <span class="stat-symbol">+</span>
                 </div>
                 <p>Automation Tools</p>
             </div>
-            <div class="stat-item">
+            <div class="stat-item" data-reveal data-delay="3">
                 <div style="display:flex;justify-content:center;align-items:baseline;gap:4px;margin-bottom:5px;">
                     <span class="stat-symbol" style="color:var(--text-main);font-size:3rem;">10-</span>
                     <h3 class="counter" data-target="15" style="margin:0;">0</h3>
@@ -755,27 +870,27 @@
 </div>
 
 <div class="container">
-    <div id="features" class="section-header">
+    <div id="features" class="section-header" data-reveal>
         <h2>Drafting, automated.</h2>
         <p>Built specifically for AutoCAD structural detailers to eliminate tedious, repetitive sketching workflows.</p>
     </div>
     <div class="features-grid">
-        <div class="feature-card">
+        <div class="feature-card" data-reveal data-delay="1">
             <div class="feature-icon"><i class="fas fa-bolt"></i></div>
             <h3>Instant Detailing</h3>
             <p>Tasks that used to take days — placing elevation tags, generating rebar arrays, drawing breaklines — reduced to a single click.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-reveal data-delay="2">
             <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
             <h3>Flawless Accuracy</h3>
             <p>Built-in calculators automatically total lengths and convert units on the fly, ensuring your blueprints are perfectly precise.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-reveal data-delay="3">
             <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
             <h3>Smart Layer Logic</h3>
             <p>Auto-layer assignment ensures all text, structural rebar, and dimensions stay organized without any manual switching.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card" data-reveal data-delay="4">
             <div class="feature-icon"><i class="fas fa-table"></i></div>
             <h3>Automated Schedules</h3>
             <p>Export and generate precise Bar Bending Schedules (BBS) directly from AutoCAD drawing data — zero manual entry.</p>
@@ -786,12 +901,12 @@
 <!-- =============== FLIP CARD REVIEWS =============== -->
 <div class="reviews-section">
     <div class="container">
-        <div class="section-header" style="margin-top:0;">
+        <div class="section-header" style="margin-top:0;" data-reveal>
             <h2>See what our customers say</h2>
             <p>Hover over any card to read the full testimonial from our engineering partners.</p>
         </div>
         <div class="reviews-grid">
-            <div class="flip-card">
+            <div class="flip-card" data-reveal data-delay="1">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
                         <div class="fc-logo"><i class="fab fa-building"></i> BuildCore Ltd.</div>
@@ -2892,6 +3007,43 @@ function toggleFaq(btn) {
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
 }
+
+// ---- SCROLL REVEAL ----
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+// ---- HERO CURSOR GLOW ----
+const heroWrapper = document.querySelector('.hero-wrapper');
+const cursorGlow = document.querySelector('.hero-cursor-glow');
+if (heroWrapper && cursorGlow) {
+    heroWrapper.addEventListener('mousemove', e => {
+        const rect = heroWrapper.getBoundingClientRect();
+        cursorGlow.style.left = (e.clientX - rect.left) + 'px';
+        cursorGlow.style.top = (e.clientY - rect.top) + 'px';
+    });
+}
+
+// ---- BUTTON RIPPLE ----
+document.querySelectorAll('.cta-btn, .auth-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        const size = Math.max(this.offsetWidth, this.offsetHeight);
+        ripple.style.width = ripple.style.height = size + 'px';
+        const rect = this.getBoundingClientRect();
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 620);
+    });
+});
 </script>
 </body>
 </html>
