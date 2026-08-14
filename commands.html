@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Directory &mdash; SIDMax</title>
+    <meta name="description" content="Browse all 89+ SIDMax AutoCAD automation commands. Search by name, alias or description.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        :root {
+            --bg-base:#09090b;--bg-surface:#18181b;--bg-elevated:#27272a;
+            --primary:#3b82f6;--text-main:#fafafa;--text-muted:#a1a1aa;
+            --border-color:rgba(255,255,255,0.08);font-family:'Inter',sans-serif;
+        }
+        [data-theme="light"] {
+            --bg-base:#f4f4f5;--bg-surface:#ffffff;--bg-elevated:#e4e4e7;
+            --text-main:#09090b;--text-muted:#52525b;--border-color:rgba(0,0,0,0.09);
+        }
+        * { box-sizing:border-box; }
+        body { background:var(--bg-base);color:var(--text-main);margin:0;padding:0;
+               line-height:1.6;-webkit-font-smoothing:antialiased;
+               animation:fadeIn 0.4s ease;transition:background 0.3s,color 0.3s; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .container { max-width:1300px;margin:0 auto;padding:0 40px; }
+
+        nav { position:sticky;top:0;z-index:1000;
+               background:rgba(9,9,11,0.78);backdrop-filter:blur(20px);
+               -webkit-backdrop-filter:blur(20px);
+               border-bottom:1px solid rgba(255,255,255,0.05);padding:15px 0;transition:background 0.3s; }
+        [data-theme="light"] nav { background:rgba(244,244,245,0.88);border-bottom:1px solid rgba(0,0,0,0.07); }
+        .nav-inner { display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:0 auto;padding:0 40px; }
+        .logo { font-size:1.5rem;font-weight:800;color:var(--text-main);display:flex;align-items:center;gap:10px;text-decoration:none; }
+        .logo i { color:var(--primary); }
+        .nav-center { display:flex;gap:35px; }
+        .nav-center a { color:var(--text-muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s; }
+        .nav-center a:hover,.nav-center a.active { color:var(--text-main); }
+        .nav-right { display:flex;align-items:center;gap:15px; }
+        .nav-right a { color:var(--text-main);text-decoration:none;font-size:0.9rem;font-weight:500; }
+        .btn-signup { background:var(--text-main)!important;color:var(--bg-base)!important;padding:10px 24px;border-radius:8px;font-weight:600!important; }
+        .theme-toggle { background:var(--bg-elevated);border:1px solid var(--border-color);border-radius:8px;color:var(--text-muted);width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:background 0.2s,color 0.2s; }
+        .theme-toggle:hover { color:var(--text-main);background:var(--bg-surface); }
+
+        .page-header { padding:90px 0 60px;border-bottom:1px solid var(--border-color);position:relative;overflow:hidden; }
+        .page-header-bg { position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(59,130,246,0.07),transparent); }
+        .page-eyebrow { font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--primary);margin-bottom:18px;display:flex;align-items:center;gap:8px; }
+        .page-header h1 { font-size:3.8rem;font-weight:800;letter-spacing:-2px;margin:0 0 18px;color:var(--text-main); }
+        .page-header p { color:var(--text-muted);font-size:1.1rem;margin:0 0 30px;max-width:600px; }
+        .header-stats { display:flex;gap:40px;flex-wrap:wrap; }
+        .hstat { display:flex;flex-direction:column; }
+        .hstat-val { font-size:2rem;font-weight:700;color:var(--text-main);letter-spacing:-1px; }
+        .hstat-lbl { font-size:0.85rem;color:var(--text-muted); }
+
+        .search-section { padding:40px 0 30px; }
+        .cmd-search-inner { display:flex;align-items:center;background:var(--bg-surface);border:1px solid var(--border-color);border-radius:14px;padding:0 20px;gap:14px;transition:border-color 0.2s;box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+        .cmd-search-inner:focus-within { border-color:var(--primary); }
+        .cmd-search-inner i { color:var(--text-muted);font-size:1rem;flex-shrink:0; }
+        #cmd-search { flex:1;padding:18px 0;background:none;border:none;color:var(--text-main);font-size:1.05rem;font-family:inherit;outline:none; }
+        #cmd-search::placeholder { color:var(--text-muted); }
+        .search-meta { display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:0 4px; }
+        #search-count { color:var(--text-muted);font-size:0.88rem; }
+        .clear-btn { background:none;border:none;color:var(--text-muted);font-size:0.88rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color 0.2s;font-family:inherit;display:none; }
+        .clear-btn:hover { color:var(--text-main); }
+        .clear-btn.visible { display:inline; }
+
+        .categories-section { padding-bottom:100px; }
+        .category-card { background:var(--bg-surface);border:1px solid var(--border-color);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:border-color 0.2s; }
+        .category-card:hover { border-color:rgba(59,130,246,0.25); }
+        .category-toggle { width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px 32px;background:none;border:none;cursor:pointer;color:var(--text-main);text-align:left;transition:background 0.2s; }
+        .category-toggle:hover { background:var(--bg-elevated); }
+        .category-title { display:flex;align-items:center;gap:14px;font-size:1.2rem;font-weight:600;color:var(--text-main); }
+        .category-badge { font-size:0.78rem;background:rgba(59,130,246,0.1);color:var(--primary);border:1px solid rgba(59,130,246,0.2);padding:3px 10px;border-radius:20px;font-weight:600; }
+        .category-chevron { font-size:0.9rem;color:var(--text-muted);transition:transform 0.3s; }
+        .category-card.open .category-chevron { transform:rotate(180deg); }
+        .category-body { max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);border-top:0px solid var(--border-color); }
+        .category-card.open .category-body { max-height:6000px;border-top-width:1px; }
+        .cmd-table-wrap { padding:0 32px 24px; }
+        table { width:100%;border-collapse:collapse; }
+        th,td { padding:16px 12px;text-align:left;border-bottom:1px solid var(--border-color); }
+        th { color:var(--text-muted);text-transform:uppercase;font-size:0.78rem;font-weight:600;letter-spacing:1px; }
+        tr:last-child td { border-bottom:none; }
+        td.cmd-icon-cell { width:40px;text-align:center;color:var(--text-muted);font-size:1.1rem; }
+        .cmd-name { font-weight:500;color:var(--text-main);font-size:1rem; }
+        .cmd-alias { background:var(--bg-elevated);color:var(--text-main);padding:5px 10px;border-radius:6px;font-family:monospace;font-size:0.83rem;border:1px solid var(--border-color);display:inline-block; }
+        .cmd-desc { color:var(--text-muted);font-size:0.95rem; }
+        .cmd-row.hidden { display:none; }
+        .no-results { text-align:center;padding:80px 20px;color:var(--text-muted);display:none; }
+        .no-results i { font-size:3rem;margin-bottom:20px;opacity:0.3;display:block; }
+        .no-results p { font-size:1.05rem; }
+
+        @media (max-width:900px) {
+            .nav-center { display:none; }
+            .page-header h1 { font-size:2.5rem; }
+            .category-toggle { padding:16px 20px; }
+            .cmd-table-wrap { padding:0 20px 20px; }
+            table,thead,tbody,th,td,tr { display:block; }
+            th { display:none; }
+            td { padding:8px 0;border:none; }
+            tr { border-bottom:1px solid var(--border-color);padding-bottom:14px;margin-bottom:14px; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo"><i class="fas fa-compass"></i> SIDMax</a>
+        <div class="nav-center">
+            <a href="index.html#products">Products</a>
+            <a href="index.html#features">Features</a>
+            <a href="commands.html" class="active">Commands</a>
+            <a href="roadmap.html">Roadmap</a>
+            <a href="whatsnew.html">What's New</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></button>
+            <a href="index.html#contact">Log in</a>
+            <a href="index.html#contact" class="btn-signup">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="container">
+        <div class="page-eyebrow"><i class="fas fa-terminal"></i> Command Directory</div>
+        <h1>All Commands</h1>
+        <p>Search and browse the complete library of 89+ automation tools built into SIDMax for AutoCAD and RebarCAD.</p>
+        <div class="header-stats">
+            <div class="hstat"><span class="hstat-val">89+</span><span class="hstat-lbl">Total Commands</span></div>
+            <div class="hstat"><span class="hstat-val">40</span><span class="hstat-lbl">Categories</span></div>
+            <div class="hstat"><span class="hstat-val">v2.4</span><span class="hstat-lbl">Latest Version</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="search-section">
+    <div class="container">
+        <div class="cmd-search-inner">
+            <i class="fas fa-search"></i>
+            <input id="cmd-search" type="text" placeholder="Search by command name, alias or description..." autocomplete="off">
+            <i class="fas fa-times" id="clear-icon" style="cursor:pointer;display:none;" onclick="clearSearch()"></i>
+        </div>
+        <div class="search-meta">
+            <div id="search-count">89 commands across 40 categories</div>
+            <button class="clear-btn" id="clear-btn" onclick="clearSearch()">Clear search</button>
+        </div>
+    </div>
+</div>
+
+<div class="categories-section">
+    <div class="container">
+        <div id="cmd-categories">
+
+        <div class="category-card" data-group="Purge">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Purge
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="purgeall" data-alias="pp" data-desc="executes the purge command multiple times in succession to clean all unreferenced named objects from the drawing.">
+                                <td class="cmd-icon-cell"><i class="fas fa-broom"></i></td>
+                                <td><div class="cmd-name">PurgeAll</div></td>
+                                <td><div class="cmd-alias">PP</div></td>
+                                <td><div class="cmd-desc">Executes the PURGE command multiple times in succession to clean all unreferenced named objects from the drawing.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Quick shortcuts">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Quick shortcuts
+                    <span class="category-badge">8</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="quickshortcuts" data-alias="qs, quickshortcuts" data-desc="prints a menu listing custom command shortcuts and their associated actions in the command window history.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">Quickshortcuts</div></td>
+                                <td><div class="cmd-alias">QS, QUICKSHORTCUTS</div></td>
+                                <td><div class="cmd-desc">Prints a menu listing custom command shortcuts and their associated actions in the command window history.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="openteamfolder" data-alias="rp" data-desc="opens the network team rp folder directory in windows file explorer.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenTeamFolder</div></td>
+                                <td><div class="cmd-alias">RP</div></td>
+                                <td><div class="cmd-desc">Opens the network team RP folder directory in Windows File Explorer.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="openlocalfolder" data-alias="rl" data-desc="opens the local rp folder directory in windows file explorer.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenLocalFolder</div></td>
+                                <td><div class="cmd-alias">RL</div></td>
+                                <td><div class="cmd-desc">Opens the local RP folder directory in Windows File Explorer.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="openexcellog" data-alias="rrr" data-desc="opens the team-rp excel log file located on the network drive.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenExcelLog</div></td>
+                                <td><div class="cmd-alias">RRR</div></td>
+                                <td><div class="cmd-desc">Opens the Team-RP Excel log file located on the network drive.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="opendispatchschedule" data-alias="dispatch" data-desc="calculates the current month and year to open the corresponding dispatch schedule folder in windows file explorer.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenDispatchSchedule</div></td>
+                                <td><div class="cmd-alias">DISPATCH</div></td>
+                                <td><div class="cmd-desc">Calculates the current month and year to open the corresponding dispatch schedule folder in Windows File Explorer.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="opencalculator" data-alias="ww" data-desc="launches the standard windows calculator application.">
+                                <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
+                                <td><div class="cmd-name">OpenCalculator</div></td>
+                                <td><div class="cmd-alias">WW</div></td>
+                                <td><div class="cmd-desc">Launches the standard Windows Calculator application.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="openlapschedule" data-alias="lap" data-desc="opens the aci 318-95 lap schedule reference document in pdf format.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenLapSchedule</div></td>
+                                <td><div class="cmd-alias">LAP</div></td>
+                                <td><div class="cmd-desc">Opens the ACI 318-95 lap schedule reference document in PDF format.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="opencanadianstandard" data-alias="canstd" data-desc="opens the canadian reinforcing steel manual of standard practice reference document in pdf format.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">OpenCanadianStandard</div></td>
+                                <td><div class="cmd-alias">CANSTD</div></td>
+                                <td><div class="cmd-desc">Opens the Canadian Reinforcing Steel Manual of Standard Practice reference document in PDF format.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Drawing history">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Drawing history
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="drawinghistory" data-alias="hist, history" data-desc="displays a formatted table in the text window showing recent dwg files in the current folder along with save times and open status.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">DrawingHistory</div></td>
+                                <td><div class="cmd-alias">HIST, HISTORY</div></td>
+                                <td><div class="cmd-desc">Displays a formatted table in the text window showing recent DWG files in the current folder along with save times and open status.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="batchopenrecent" data-alias="openrec, openlast, mrudttopen, openhist" data-desc="batch opens recent dwg files found in the current drawing directory up to a specified count.">
+                                <td class="cmd-icon-cell"><i class="fas fa-folder-open"></i></td>
+                                <td><div class="cmd-name">BatchOpenRecent</div></td>
+                                <td><div class="cmd-alias">OPENREC, OPENLAST, MRUDTTOPEN, OPENHIST</div></td>
+                                <td><div class="cmd-desc">Batch opens recent DWG files found in the current drawing directory up to a specified count.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="R14">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    R14
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="initializeuservars" data-alias="user_var" data-desc="loads custom lisp utilities, configures drafting system variables, turns on all layers, and sets the current layer to 0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">InitializeUserVars</div></td>
+                                <td><div class="cmd-alias">USER_VAR</div></td>
+                                <td><div class="cmd-desc">Loads custom LISP utilities, configures drafting system variables, turns on all layers, and sets the current layer to 0.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="C1 smartcopy">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    C1 smartcopy
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="smartcopy" data-alias="c1" data-desc="">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">SmartCopy</div></td>
+                                <td><div class="cmd-alias">C1</div></td>
+                                <td><div class="cmd-desc"></div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Smartoffset">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Smartoffset
+                    <span class="category-badge">4</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="offsetimperial" data-alias="oi" data-desc="performs an offset operation converting user input provided in feet, inches, or decimal format to millimeters.">
+                                <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
+                                <td><div class="cmd-name">OffsetImperial</div></td>
+                                <td><div class="cmd-alias">OI</div></td>
+                                <td><div class="cmd-desc">Performs an offset operation converting user input provided in feet, inches, or decimal format to millimeters.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="offsetmeterstoinches" data-alias="om" data-desc="performs an offset operation converting the specified offset distance from meters to inches.">
+                                <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
+                                <td><div class="cmd-name">OffsetMetersToInches</div></td>
+                                <td><div class="cmd-alias">OM</div></td>
+                                <td><div class="cmd-desc">Performs an offset operation converting the specified offset distance from meters to inches.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="offsetmillimeterstoinches" data-alias="omm" data-desc="performs an offset operation converting the specified offset distance from millimeters to inches.">
+                                <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
+                                <td><div class="cmd-name">OffsetMillimetersToInches</div></td>
+                                <td><div class="cmd-alias">OMM</div></td>
+                                <td><div class="cmd-desc">Performs an offset operation converting the specified offset distance from millimeters to inches.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="multipleoffset" data-alias="q1" data-desc="creates multiple offsets or a range of offsets for a selected entity on a picked side and spacing distance.">
+                                <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
+                                <td><div class="cmd-name">MultipleOffset</div></td>
+                                <td><div class="cmd-alias">Q1</div></td>
+                                <td><div class="cmd-desc">Creates multiple offsets or a range of offsets for a selected entity on a picked side and spacing distance.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Breakline">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Breakline
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="breakline" data-alias="cutline, breakline, bl" data-desc="draws a breakline cut symbol with a preset size parameter of 10.0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-cut"></i></td>
+                                <td><div class="cmd-name">BreakLine</div></td>
+                                <td><div class="cmd-alias">CUTLINE, BREAKLINE, BL</div></td>
+                                <td><div class="cmd-desc">Draws a breakline cut symbol with a preset size parameter of 10.0.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="breaklinelarge" data-alias="cut2, bl2" data-desc="draws a breakline cut symbol with a preset size parameter of 20.0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-cut"></i></td>
+                                <td><div class="cmd-name">BreakLineLarge</div></td>
+                                <td><div class="cmd-alias">CUT2, BL2</div></td>
+                                <td><div class="cmd-desc">Draws a breakline cut symbol with a preset size parameter of 20.0.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Tilemode_cover">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Tilemode_cover
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="tilemodecover" data-alias="`, cv, v, cov, tilecover, cover" data-desc="assigns implied, recent, or last created entities to the designated cover layer without selection highlighting.">
+                                <td class="cmd-icon-cell"><i class="fas fa-layer-group"></i></td>
+                                <td><div class="cmd-name">TilemodeCover</div></td>
+                                <td><div class="cmd-alias">`, CV, V, COV, TILECOVER, COVER</div></td>
+                                <td><div class="cmd-desc">Assigns implied, recent, or last created entities to the designated COVER layer without selection highlighting.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Elevationmarkerv1 1">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Elevationmarkerv1 1
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="elevationmarker" data-alias="em" data-desc="draws an elevation callout polyline and creates text indicating the y-coordinate elevation at a picked point.">
+                                <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
+                                <td><div class="cmd-name">ElevationMarker</div></td>
+                                <td><div class="cmd-alias">EM</div></td>
+                                <td><div class="cmd-desc">Draws an elevation callout polyline and creates TEXT indicating the Y-coordinate elevation at a picked point.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Text box.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Text box.lsp
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="textbox" data-alias="rtb" data-desc="draws rounded rectangular boundary polyline boxes around selected text and mtext entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextBox</div></td>
+                                <td><div class="cmd-alias">RTB</div></td>
+                                <td><div class="cmd-desc">Draws rounded rectangular boundary polyline boxes around selected TEXT and MTEXT entities.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Text_utilities">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Text_utilities
+                    <span class="category-badge">16</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="texttoupper" data-alias="up" data-desc="converts the string content of selected text, mtext, or attrib entities to uppercase.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextToUpper</div></td>
+                                <td><div class="cmd-alias">UP</div></td>
+                                <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to uppercase.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="texttolower" data-alias="lo" data-desc="converts the string content of selected text, mtext, or attrib entities to lowercase.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextToLower</div></td>
+                                <td><div class="cmd-alias">LO</div></td>
+                                <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to lowercase.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="texttotitle" data-alias="tc" data-desc="converts the string content of selected text, mtext, or attrib entities to title case.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextToTitle</div></td>
+                                <td><div class="cmd-alias">TC</div></td>
+                                <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to Title Case.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="texttosentence" data-alias="snc" data-desc="converts the string content of selected text, mtext, or attrib entities to sentence case.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextToSentence</div></td>
+                                <td><div class="cmd-alias">SNC</div></td>
+                                <td><div class="cmd-desc">Converts the string content of selected TEXT, MTEXT, or ATTRIB entities to Sentence case.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textcopy" data-alias="tt" data-desc="copies the text content from a selected source text object to multiple destination text entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextCopy</div></td>
+                                <td><div class="cmd-alias">TT</div></td>
+                                <td><div class="cmd-desc">Copies the text content from a selected source text object to multiple destination text entities.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textjustifyvertical" data-alias="tjv" data-desc="collects text from selected entities, sorts them vertically by coordinates, and outputs the joined text.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextJustifyVertical</div></td>
+                                <td><div class="cmd-alias">TJV</div></td>
+                                <td><div class="cmd-desc">Collects text from selected entities, sorts them vertically by coordinates, and outputs the joined text.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textjustifyhorizontal" data-alias="tjx" data-desc="collects text from selected entities, sorts them horizontally by coordinates, and outputs the joined text.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextJustifyHorizontal</div></td>
+                                <td><div class="cmd-alias">TJX</div></td>
+                                <td><div class="cmd-desc">Collects text from selected entities, sorts them horizontally by coordinates, and outputs the joined text.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="aligntextx" data-alias="mx" data-desc="aligns selected text and mtext entities horizontally to a picked x-axis coordinate point.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">AlignTextX</div></td>
+                                <td><div class="cmd-alias">MX</div></td>
+                                <td><div class="cmd-desc">Aligns selected TEXT and MTEXT entities horizontally to a picked X-axis coordinate point.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="aligntexty" data-alias="my" data-desc="aligns selected text and mtext entities vertically to a picked y-axis coordinate point.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">AlignTextY</div></td>
+                                <td><div class="cmd-alias">MY</div></td>
+                                <td><div class="cmd-desc">Aligns selected TEXT and MTEXT entities vertically to a picked Y-axis coordinate point.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textswap" data-alias="tsw" data-desc="swaps the text content between two selected text entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextSwap</div></td>
+                                <td><div class="cmd-alias">TSW</div></td>
+                                <td><div class="cmd-desc">Swaps the text content between two selected text entities.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textrotate90" data-alias="rx" data-desc="rotates selected text objects interactively by 90 degrees clockwise.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextRotate90</div></td>
+                                <td><div class="cmd-alias">RX</div></td>
+                                <td><div class="cmd-desc">Rotates selected text objects interactively by 90 degrees clockwise.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textreplace" data-alias="txr" data-desc="replaces specified text strings in selected or drawing-wide text entities using whole or partial string matching.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextReplace</div></td>
+                                <td><div class="cmd-alias">TXR</div></td>
+                                <td><div class="cmd-desc">Replaces specified text strings in selected or drawing-wide text entities using whole or partial string matching.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="texttomtext" data-alias="t2m" data-desc="converts selected single-line text entities into mtext entities while preserving orientation and insertion points.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextToMtext</div></td>
+                                <td><div class="cmd-alias">T2M</div></td>
+                                <td><div class="cmd-desc">Converts selected single-line TEXT entities into MTEXT entities while preserving orientation and insertion points.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="mtexttotext" data-alias="m2t" data-desc="explodes selected mtext entities into single-line text entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">MtextToText</div></td>
+                                <td><div class="cmd-alias">M2T</div></td>
+                                <td><div class="cmd-desc">Explodes selected MTEXT entities into single-line TEXT entities.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textprepend" data-alias="tpre" data-desc="prepends a user-specified text string prefix to selected text, mtext, or attrib entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextPrepend</div></td>
+                                <td><div class="cmd-alias">TPRE</div></td>
+                                <td><div class="cmd-desc">Prepends a user-specified text string prefix to selected TEXT, MTEXT, or ATTRIB entities.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textappend" data-alias="tsuf" data-desc="appends a user-specified text suffix to all selected text, mtext, or attrib entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextAppend</div></td>
+                                <td><div class="cmd-alias">TSUF</div></td>
+                                <td><div class="cmd-desc">Appends a user-specified text suffix to all selected TEXT, MTEXT, or ATTRIB entities.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Replace text to block">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Replace text to block
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="replacetextwithblock" data-alias="rep-txbk" data-desc="replaces selected text entities with a specified block reference placed at the text insertion point and rotation.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">ReplaceTextWithBlock</div></td>
+                                <td><div class="cmd-alias">REP-TXBK</div></td>
+                                <td><div class="cmd-desc">Replaces selected TEXT entities with a specified block reference placed at the text insertion point and rotation.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Tds set dimension or text to current by touching an object">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Tds set dimension or text to current by touching an object
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="matchtextstyle" data-alias="tds" data-desc="sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">MatchTextStyle</div></td>
+                                <td><div class="cmd-alias">TDS</div></td>
+                                <td><div class="cmd-desc">Sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Spot_elevation_picker">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Spot_elevation_picker
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="spotelevation" data-alias="spotel" data-desc="calculates elevations at picked points within a bounded grading region and places elevation marker blocks and text.">
+                                <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
+                                <td><div class="cmd-name">SpotElevation</div></td>
+                                <td><div class="cmd-alias">SPOTEL</div></td>
+                                <td><div class="cmd-desc">Calculates elevations at picked points within a bounded grading region and places elevation marker blocks and text.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="1. elevationtool">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    1. elevationtool
+                    <span class="category-badge">3</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="elevationmodetoggle" data-alias="btmode" data-desc="configures and displays the global elevation display mode setting between imperial fractional feet-inches and metric values.">
+                                <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
+                                <td><div class="cmd-name">ElevationModeToggle</div></td>
+                                <td><div class="cmd-alias">BTMODE</div></td>
+                                <td><div class="cmd-desc">Configures and displays the global elevation display mode setting between Imperial fractional feet-inches and Metric values.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="elevationtag" data-alias="bt" data-desc="places continuous elevation tags formatted as fractional feet-inches or whole millimeters depending on the active unit mode.">
+                                <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
+                                <td><div class="cmd-name">ElevationTag</div></td>
+                                <td><div class="cmd-alias">BT</div></td>
+                                <td><div class="cmd-desc">Places continuous elevation tags formatted as fractional feet-inches or whole millimeters depending on the active unit mode.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="elevationtagdecimal" data-alias="bd" data-desc="places continuous elevation tags formatted as decimal feet or decimal meters depending on the active unit mode.">
+                                <td class="cmd-icon-cell"><i class="fas fa-ruler-vertical"></i></td>
+                                <td><div class="cmd-name">ElevationTagDecimal</div></td>
+                                <td><div class="cmd-alias">BD</div></td>
+                                <td><div class="cmd-desc">Places continuous elevation tags formatted as decimal feet or decimal meters depending on the active unit mode.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Text categorizer">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Text categorizer
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="textreport" data-alias="treport" data-desc="counts and generates a command-line summary report of footing mark text and block objects across selected drawing regions.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextReport</div></td>
+                                <td><div class="cmd-alias">TREPORT</div></td>
+                                <td><div class="cmd-desc">Counts and generates a command-line summary report of footing mark text and block objects across selected drawing regions.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textreportsettings" data-alias="treport_setting" data-desc="configures settings for the treport command, including match prefix and object types.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextReportSettings</div></td>
+                                <td><div class="cmd-alias">TREPORT_SETTING</div></td>
+                                <td><div class="cmd-desc">Configures settings for the TREPORT command, including match prefix and object types.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Create sequential text">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Create sequential text
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="sequentialtext" data-alias="seqtxt" data-desc="creates sequentially numbered text entities at picked locations with configurable increments and optional entity grouping.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">SequentialText</div></td>
+                                <td><div class="cmd-alias">SEQTXT</div></td>
+                                <td><div class="cmd-desc">Creates sequentially numbered text entities at picked locations with configurable increments and optional entity grouping.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Label positioner">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Label positioner
+                    <span class="category-badge">5</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="labelalignleft" data-alias="lbl" data-desc="left-aligns selected text entities relative to a picked reference x-coordinate.">
+                                <td class="cmd-icon-cell"><i class="fas fa-align-left"></i></td>
+                                <td><div class="cmd-name">LabelAlignLeft</div></td>
+                                <td><div class="cmd-alias">LBL</div></td>
+                                <td><div class="cmd-desc">Left-aligns selected text entities relative to a picked reference X-coordinate.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="labelalignright" data-alias="lbr" data-desc="right-aligns selected text entities relative to a picked reference x-coordinate.">
+                                <td class="cmd-icon-cell"><i class="fas fa-align-left"></i></td>
+                                <td><div class="cmd-name">LabelAlignRight</div></td>
+                                <td><div class="cmd-alias">LBR</div></td>
+                                <td><div class="cmd-desc">Right-aligns selected text entities relative to a picked reference X-coordinate.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="labelstackleft" data-alias="1" data-desc="left-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">LabelStackLeft</div></td>
+                                <td><div class="cmd-alias">1</div></td>
+                                <td><div class="cmd-desc">Left-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="labelstackright" data-alias="2" data-desc="right-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">LabelStackRight</div></td>
+                                <td><div class="cmd-alias">2</div></td>
+                                <td><div class="cmd-desc">Right-aligns and vertically stacks selected text entities below a picked point and draws a surrounding boundary polyline on layer 0-25text.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="labelleader" data-alias="33" data-desc="draws a detail leader line with a circle marker at the origin point on the 0-25text layer.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">LabelLeader</div></td>
+                                <td><div class="cmd-alias">33</div></td>
+                                <td><div class="cmd-desc">Draws a detail leader line with a circle marker at the origin point on the 0-25text layer.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Select_object_to_set_current">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Select_object_to_set_current
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="matchtextstyle" data-alias="tds" data-desc="sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">MatchTextStyle</div></td>
+                                <td><div class="cmd-alias">TDS</div></td>
+                                <td><div class="cmd-desc">Sets the current drawing layer, dimension style, and text style to match a selected dimension, text, or leader entity.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Tilemode_plot.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Tilemode_plot.lsp
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="togglespace" data-alias="v" data-desc="toggles between model space and layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ToggleSpace</div></td>
+                                <td><div class="cmd-alias">V</div></td>
+                                <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="togglerebarlayers" data-alias="`q" data-desc="turns off the rebars, rangelay, bar-lbl, and 0-25text layers when executed in model space.">
+                                <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
+                                <td><div class="cmd-name">ToggleRebarLayers</div></td>
+                                <td><div class="cmd-alias">`Q</div></td>
+                                <td><div class="cmd-desc">Turns off the Rebars, Rangelay, Bar-Lbl, and 0-25text layers when executed in Model space.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Plotatn.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Plotatn.lsp
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="resetvariables" data-alias="reset_atn" data-desc="resets system variables cmdecho, blipmode, and filedia to 1 and executes the aplot command.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ResetVariables</div></td>
+                                <td><div class="cmd-alias">RESET_ATN</div></td>
+                                <td><div class="cmd-desc">Resets system variables CMDECHO, BLIPMODE, and FILEDIA to 1 and executes the APLOT command.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="r14plotsetup" data-alias="r14plot" data-desc="sets layer to 0, resets plotting system variables, zooms to drawing extents, and triggers drawing plotting.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">R14PlotSetup</div></td>
+                                <td><div class="cmd-alias">R14PLOT</div></td>
+                                <td><div class="cmd-desc">Sets layer to 0, resets plotting system variables, zooms to drawing extents, and triggers drawing plotting.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Prints all layout.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Prints all layout.lsp
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="printalllayouts" data-alias="pa" data-desc="plots all paper space layouts to pdf using the dwg to pdf.pc3 printer configuration and monochrome plot style.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">PrintAllLayouts</div></td>
+                                <td><div class="cmd-alias">PA</div></td>
+                                <td><div class="cmd-desc">Plots all paper space layouts to PDF using the DWG To PDF.pc3 printer configuration and monochrome plot style.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Sdsds">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Sdsds
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="interactivelinecountmode" data-alias="ilcmode" data-desc="toggles the operational mode of the interactive line count command between popup dialog and command line modes.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">InteractiveLineCountMode</div></td>
+                                <td><div class="cmd-alias">ILCMODE</div></td>
+                                <td><div class="cmd-desc">Toggles the operational mode of the Interactive Line Count command between POPUP dialog and COMMAND line modes.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="interactivelinecount" data-alias="ilc" data-desc="executes the interactive line count routine using either interactive popup dialog or command-line mode based on current mode settings.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">InteractiveLineCount</div></td>
+                                <td><div class="cmd-alias">ILC</div></td>
+                                <td><div class="cmd-desc">Executes the Interactive Line Count routine using either interactive popup dialog or command-line mode based on current mode settings.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Sgg  copy  copy  copy (2).lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Sgg  copy  copy  copy (2).lsp
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="togglespace" data-alias="v" data-desc="toggles between model space and layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ToggleSpace</div></td>
+                                <td><div class="cmd-alias">V</div></td>
+                                <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Smart preview.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Smart preview.lsp
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="togglespace" data-alias="v" data-desc="toggles between model space and layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ToggleSpace</div></td>
+                                <td><div class="cmd-alias">V</div></td>
+                                <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Tilemode plot 1  copy  copy.lsp">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Tilemode plot 1  copy  copy.lsp
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="togglespace" data-alias="v" data-desc="toggles between model space and layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ToggleSpace</div></td>
+                                <td><div class="cmd-alias">V</div></td>
+                                <td><div class="cmd-desc">Toggles between Model space and Layout paper space while maintaining and restoring layer freeze states, viewport settings, and scales.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Zoome">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Zoome
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="zoomextentsall" data-alias="zoome" data-desc="zooms to extents across all active viewports in paper space or model space.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">ZoomExtentsAll</div></td>
+                                <td><div class="cmd-alias">ZOOME</div></td>
+                                <td><div class="cmd-desc">Zooms to extents across all active viewports in Paper Space or Model Space.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Revisioncloud">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Revisioncloud
+                    <span class="category-badge">3</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="revisioncloud" data-alias="cloud, revcloud, rc" data-desc="draws a rectangular revision cloud with a arc length size parameter of 20.0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
+                                <td><div class="cmd-name">RevisionCloud</div></td>
+                                <td><div class="cmd-alias">CLOUD, REVCLOUD, RC</div></td>
+                                <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 20.0.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="revisioncloudsmall" data-alias="rc2" data-desc="draws a rectangular revision cloud with a arc length size parameter of 10.0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
+                                <td><div class="cmd-name">RevisionCloudSmall</div></td>
+                                <td><div class="cmd-alias">RC2</div></td>
+                                <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 10.0.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="revisioncloudlarge" data-alias="rc3" data-desc="draws a rectangular revision cloud with a arc length size parameter of 30.0.">
+                                <td class="cmd-icon-cell"><i class="fas fa-cloud"></i></td>
+                                <td><div class="cmd-name">RevisionCloudLarge</div></td>
+                                <td><div class="cmd-alias">RC3</div></td>
+                                <td><div class="cmd-desc">Draws a rectangular revision cloud with a arc length size parameter of 30.0.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Rebar_array ararr">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Rebar_array ararr
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="arrayrebar" data-alias="ararr" data-desc="generates a linear array of line segments within a closed boundary polygon while trimming around internal opening boundaries.">
+                                <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
+                                <td><div class="cmd-name">ArrayRebar</div></td>
+                                <td><div class="cmd-alias">ARARR</div></td>
+                                <td><div class="cmd-desc">Generates a linear array of line segments within a closed boundary polygon while trimming around internal opening boundaries.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Spanpercent">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Spanpercent
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="arealabeling" data-alias="al" data-desc="initializes environment settings and executes the main area labeling main routine.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">AreaLabeling</div></td>
+                                <td><div class="cmd-alias">AL</div></td>
+                                <td><div class="cmd-desc">Initializes environment settings and executes the main Area Labeling main routine.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Dowelcorner">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Dowelcorner
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="dowelcorner" data-alias="dc, dowelcorner" data-desc="detects corner intersections between selected wall or slab edges within an angle range and places dowel donut markers at offset locations.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">DowelCorner</div></td>
+                                <td><div class="cmd-alias">DC, DOWELCORNER</div></td>
+                                <td><div class="cmd-desc">Detects corner intersections between selected wall or slab edges within an angle range and places dowel donut markers at offset locations.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Bar run">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Bar run
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="dowelrun" data-alias="dowel" data-desc="places donut markers on the rebars layer at regular spacing intervals along selected connected curve entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">DowelRun</div></td>
+                                <td><div class="cmd-alias">DOWEL</div></td>
+                                <td><div class="cmd-desc">Places donut markers on the REBARS layer at regular spacing intervals along selected connected curve entities.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Stock bar calc">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Stock bar calc
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="stockbarcalc" data-alias="stc" data-desc="calculates total rebar length from specified distances, polyline entities, or drawn points for structural lap length evaluation.">
+                                <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
+                                <td><div class="cmd-name">StockBarCalc</div></td>
+                                <td><div class="cmd-alias">STC</div></td>
+                                <td><div class="cmd-desc">Calculates total rebar length from specified distances, polyline entities, or drawn points for structural lap length evaluation.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Rebar callout converter">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Rebar callout converter
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="rebarcalloutconverter" data-alias="rbx" data-desc="parses selected rebar text descriptors and reformats the text into a standardized rebar callout string.">
+                                <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
+                                <td><div class="cmd-name">RebarCalloutConverter</div></td>
+                                <td><div class="cmd-alias">RBX</div></td>
+                                <td><div class="cmd-desc">Parses selected rebar text descriptors and reformats the text into a standardized rebar callout string.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Rebar donut placer">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Rebar donut placer
+                    <span class="category-badge">1</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="donutplacer" data-alias="dnr" data-desc="draws a linear array of donut entities on the cover layer representing rebar dot ranges at a specified spacing.">
+                                <td class="cmd-icon-cell"><i class="fas fa-stream"></i></td>
+                                <td><div class="cmd-name">DonutPlacer</div></td>
+                                <td><div class="cmd-alias">DNR</div></td>
+                                <td><div class="cmd-desc">Draws a linear array of donut entities on the COVER layer representing rebar dot ranges at a specified spacing.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Calculator">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Calculator
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="interactivelinecountmode" data-alias="ilcmode" data-desc="toggles the operational mode of the interactive line count command between popup dialog and command line modes.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">InteractiveLineCountMode</div></td>
+                                <td><div class="cmd-alias">ILCMODE</div></td>
+                                <td><div class="cmd-desc">Toggles the operational mode of the Interactive Line Count command between POPUP dialog and COMMAND line modes.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="interactivelinecount" data-alias="ilc" data-desc="executes the interactive line count routine using either interactive popup dialog or command-line mode based on current mode settings.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">InteractiveLineCount</div></td>
+                                <td><div class="cmd-alias">ILC</div></td>
+                                <td><div class="cmd-desc">Executes the Interactive Line Count routine using either interactive popup dialog or command-line mode based on current mode settings.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Textcal">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Textcal
+                    <span class="category-badge">2</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="textcalculator" data-alias="tcl" data-desc="launches the interactive text calculator interface.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextCalculator</div></td>
+                                <td><div class="cmd-alias">TCL</div></td>
+                                <td><div class="cmd-desc">Launches the interactive Text Calculator interface.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="textcalculatordialog" data-alias="textcalc" data-desc="opens a dialog calculator to perform arithmetic operations on numerical text entities and place the resulting mtext in the drawing.">
+                                <td class="cmd-icon-cell"><i class="fas fa-font"></i></td>
+                                <td><div class="cmd-name">TextCalculatorDialog</div></td>
+                                <td><div class="cmd-alias">TEXTCALC</div></td>
+                                <td><div class="cmd-desc">Opens a dialog calculator to perform arithmetic operations on numerical text entities and place the resulting MTEXT in the drawing.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Smart search">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Smart search
+                    <span class="category-badge">3</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="smartsearchmode" data-alias="ssmode" data-desc="configures search matching behavior including match mode and case sensitivity for the smart search command.">
+                                <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
+                                <td><div class="cmd-name">SmartSearchMode</div></td>
+                                <td><div class="cmd-alias">SSMODE</div></td>
+                                <td><div class="cmd-desc">Configures search matching behavior including match mode and case sensitivity for the smart search command.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="smartsearch" data-alias="smartsearch" data-desc="launches the smart search dialog interface.">
+                                <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
+                                <td><div class="cmd-name">SmartSearch</div></td>
+                                <td><div class="cmd-alias">SMARTSEARCH</div></td>
+                                <td><div class="cmd-desc">Launches the smart search dialog interface.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="smartsearchexecute" data-alias="smse" data-desc="displays a search dialog to query, filter, highlight, or isolate text and entity properties drawing-wide or within a selection.">
+                                <td class="cmd-icon-cell"><i class="fas fa-search"></i></td>
+                                <td><div class="cmd-name">SmartSearchExecute</div></td>
+                                <td><div class="cmd-alias">SMSE</div></td>
+                                <td><div class="cmd-desc">Displays a search dialog to query, filter, highlight, or isolate text and entity properties drawing-wide or within a selection.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Total length">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Total length
+                    <span class="category-badge">3</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="totlenmtm" data-alias="10" data-desc="calculates the total combined length of selected line, arc, polyline, lwpolyline, and spline entities and displays the result in meters in an alert dialog.">
+                                <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
+                                <td><div class="cmd-name">Totlenmtm</div></td>
+                                <td><div class="cmd-alias">10</div></td>
+                                <td><div class="cmd-desc">Calculates the total combined length of selected LINE, ARC, POLYLINE, LWPOLYLINE, and SPLINE entities and displays the result in meters in an alert dialog.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="totlenmtmm" data-alias="11" data-desc="calculates the combined length of selected line, arc, polyline, lwpolyline, and spline entities and displays the result formatted to two decimal places in millimeters in an alert dialog.">
+                                <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
+                                <td><div class="cmd-name">Totlenmtmm</div></td>
+                                <td><div class="cmd-alias">11</div></td>
+                                <td><div class="cmd-desc">Calculates the combined length of selected LINE, ARC, POLYLINE, LWPOLYLINE, and SPLINE entities and displays the result formatted to two decimal places in millimeters in an alert dialog.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="totlenimftinch" data-alias="12" data-desc="calculates and displays the cumulative total length of selected line, arc, polyline, and spline entities in feet and inches.">
+                                <td class="cmd-icon-cell"><i class="fas fa-calculator"></i></td>
+                                <td><div class="cmd-name">Totlenimftinch</div></td>
+                                <td><div class="cmd-alias">12</div></td>
+                                <td><div class="cmd-desc">Calculates and displays the cumulative total length of selected line, arc, polyline, and spline entities in feet and inches.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-card" data-group="Polyline and xline tools">
+            <button class="category-toggle" onclick="toggleCategory(this)">
+                <div class="category-title">
+                    <i class="fas fa-folder-open" style="color:var(--primary);"></i>
+                    Polyline and xline tools
+                    <span class="category-badge">5</span>
+                </div>
+                <i class="fas fa-chevron-down category-chevron"></i>
+            </button>
+            <div class="category-body">
+                <div class="cmd-table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th width="5%"></th>
+                            <th width="28%">Command</th>
+                            <th width="15%">Alias</th>
+                            <th>Description</th>
+                        </tr></thead>
+                        <tbody>
+
+                            <tr class="cmd-row" data-name="polylineclose" data-alias="pc" data-desc="closes all selected open lwpolyline entities.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">PolylineClose</div></td>
+                                <td><div class="cmd-alias">PC</div></td>
+                                <td><div class="cmd-desc">Closes all selected open LWPOLYLINE entities.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="polylinejoin" data-alias="pj, pej" data-desc="joins selected open lines, arcs, and polylines into contiguous polyline entities using the pedit command.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">PolylineJoin</div></td>
+                                <td><div class="cmd-alias">PJ, PEJ</div></td>
+                                <td><div class="cmd-desc">Joins selected open lines, arcs, and polylines into contiguous polyline entities using the PEDIT command.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="polylinewidth" data-alias="pw" data-desc="sets the constant width property of all selected lwpolyline entities to a specified global value.">
+                                <td class="cmd-icon-cell"><i class="fas fa-drafting-compass"></i></td>
+                                <td><div class="cmd-name">PolylineWidth</div></td>
+                                <td><div class="cmd-alias">PW</div></td>
+                                <td><div class="cmd-desc">Sets the constant width property of all selected LWPOLYLINE entities to a specified global value.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="xlinecover" data-alias="xl" data-desc="sets the current layer to cover and executes the xline command to draw construction lines.">
+                                <td class="cmd-icon-cell"><i class="fas fa-layer-group"></i></td>
+                                <td><div class="cmd-name">XLineCover</div></td>
+                                <td><div class="cmd-alias">XL</div></td>
+                                <td><div class="cmd-desc">Sets the current layer to COVER and executes the XLINE command to draw construction lines.</div></td>
+                            </tr>
+
+                            <tr class="cmd-row" data-name="xlineoffset" data-alias="xo" data-desc="invokes the xline command directly in offset mode.">
+                                <td class="cmd-icon-cell"><i class="fas fa-clone"></i></td>
+                                <td><div class="cmd-name">XLineOffset</div></td>
+                                <td><div class="cmd-alias">XO</div></td>
+                                <td><div class="cmd-desc">Invokes the XLINE command directly in Offset mode.</div></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <div class="no-results" id="no-results">
+            <i class="fas fa-search"></i>
+            <p>No commands matched your search. Try a different term.</p>
+        </div>
+    </div>
+</div>
+
+<footer style="border-top:1px solid var(--border-color);padding:40px 0;background:var(--bg-base);">
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+        <a href="index.html" style="font-size:1.2rem;font-weight:800;color:var(--text-main);text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-compass" style="color:var(--primary);"></i> SIDMax
+        </a>
+        <div style="color:var(--text-muted);font-size:0.88rem;">&copy; 2026 Rajaperumal P. All rights reserved.</div>
+        <div style="display:flex;gap:20px;">
+            <a href="index.html" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">Home</a>
+            <a href="roadmap.html" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">Roadmap</a>
+            <a href="whatsnew.html" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">What's New</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+const themeBtn = document.getElementById('theme-btn');
+const htmlEl = document.documentElement;
+const saved = localStorage.getItem('sidmax-theme') || 'dark';
+htmlEl.setAttribute('data-theme', saved);
+themeBtn.innerHTML = saved === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+themeBtn.addEventListener('click', () => {
+    const curr = htmlEl.getAttribute('data-theme');
+    const next = curr === 'dark' ? 'light' : 'dark';
+    htmlEl.setAttribute('data-theme', next);
+    localStorage.setItem('sidmax-theme', next);
+    themeBtn.innerHTML = next === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+});
+
+function toggleCategory(btn) { btn.closest('.category-card').classList.toggle('open'); }
+
+const searchInput = document.getElementById('cmd-search');
+const searchCount = document.getElementById('search-count');
+const clearBtn = document.getElementById('clear-btn');
+const clearIcon = document.getElementById('clear-icon');
+const noResults = document.getElementById('no-results');
+const totalCmds = 89;
+const totalCats = 40;
+
+searchInput.addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
+    let visible = 0;
+    clearBtn.classList.toggle('visible', q.length > 0);
+    clearIcon.style.display = q ? 'inline' : 'none';
+    document.querySelectorAll('.category-card').forEach(card => {
+        const rows = card.querySelectorAll('.cmd-row');
+        let cv = 0;
+        rows.forEach(row => {
+            const m = !q || row.dataset.name.includes(q) || row.dataset.alias.includes(q) || row.dataset.desc.includes(q);
+            row.classList.toggle('hidden', !m);
+            if (m) cv++;
+        });
+        if (q && cv > 0) card.classList.add('open');
+        else if (!q) card.classList.remove('open');
+        card.style.display = cv === 0 && q ? 'none' : '';
+        visible += cv;
+    });
+    noResults.style.display = visible === 0 && q ? 'block' : 'none';
+    searchCount.textContent = q
+        ? `${visible} of ${totalCmds} commands matched`
+        : `${totalCmds} commands across ${totalCats} categories`;
+});
+
+function clearSearch() {
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
+    searchInput.focus();
+}
+</script>
+</body>
+</html>
