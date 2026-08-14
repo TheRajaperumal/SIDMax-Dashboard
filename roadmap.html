@@ -424,6 +424,13 @@
             left: 7px;
             width: 2px;
             background: linear-gradient(to bottom, var(--accent) 30%, rgba(255,255,255,0.05) 100%);
+            transform-origin: top;
+            animation: drawLine 1.5s ease-out forwards;
+        }
+
+        @keyframes drawLine {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
         }
 
         .timeline-item {
@@ -432,11 +439,25 @@
             margin-bottom: 35px;
             position: relative;
             z-index: 1;
-            transition: transform 0.2s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeInRight 0.5s ease-out forwards;
         }
 
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+        .timeline-item:nth-child(5) { animation-delay: 1.0s; }
+
         .timeline-item:hover {
-            transform: translateX(4px);
+            transform: translateX(6px);
+        }
+
+        .timeline-item:hover .tl-marker {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            border-color: #60a5fa;
+            background: rgba(59, 130, 246, 0.1);
         }
 
         .timeline-item:last-child {
@@ -451,7 +472,7 @@
             border: 3px solid rgba(255, 255, 255, 0.2);
             margin-top: 3px;
             flex-shrink: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .timeline-item.done .tl-marker {
