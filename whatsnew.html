@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's New — SIDMax Release Notes</title>
+    <meta name="description" content="Latest SIDMax updates, new commands, bug fixes, and release notes for the professional AutoCAD rebar detailing suite.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --bg-elevated: #27272a;
+            --primary: #3b82f6;
+            --text-main: #fafafa;
+            --text-muted: #a1a1aa;
+            --border-color: rgba(255,255,255,0.08);
+        }
+        [data-theme="light"] {
+            --bg-base: #f4f4f5;
+            --bg-surface: #ffffff;
+            --bg-elevated: #e4e4e7;
+            --text-main: #09090b;
+            --text-muted: #52525b;
+            --border-color: rgba(0,0,0,0.09);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            background: var(--bg-base); color: var(--text-main);
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased; line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+
+        /* NAV */
+        nav {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(9,9,11,0.75); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05); padding: 15px 0;
+            transition: background 0.3s;
+        }
+        [data-theme="light"] nav { background: rgba(244,244,245,0.88); border-bottom: 1px solid rgba(0,0,0,0.07); }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo i { color: var(--primary); }
+        .nav-center { display: flex; gap: 35px; }
+        .nav-center a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-center a:hover, .nav-center a.active { color: var(--text-main); }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .theme-toggle {
+            background: var(--bg-elevated); border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-muted); width: 38px; height: 38px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 1rem; transition: background 0.2s, color 0.2s;
+        }
+        .theme-toggle:hover { color: var(--text-main); background: var(--bg-surface); }
+        .btn-signup { background: var(--text-main) !important; color: var(--bg-base) !important; padding: 10px 24px; border-radius: 8px; font-weight: 600 !important; text-decoration: none; }
+
+        /* PAGE HEADER */
+        .page-header {
+            padding: 90px 0 70px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .page-header-inner { max-width: 680px; }
+        .page-eyebrow {
+            font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--primary); margin-bottom: 18px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .page-header h1 { font-size: 3.8rem; font-weight: 800; letter-spacing: -2px; margin: 0 0 20px; color: var(--text-main); }
+        .page-header p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin: 0; }
+
+        /* RELEASE LAYOUT */
+        .releases-layout { display: grid; grid-template-columns: 240px 1fr; gap: 60px; padding: 80px 0 120px; align-items: start; }
+        .releases-sidebar { position: sticky; top: 100px; }
+        .sidebar-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px; }
+        .sidebar-nav a {
+            display: block; padding: 10px 14px; color: var(--text-muted);
+            text-decoration: none; border-radius: 8px; font-size: 0.9rem;
+            font-weight: 500; transition: background 0.2s, color 0.2s; margin-bottom: 4px;
+        }
+        .sidebar-nav a:hover, .sidebar-nav a.active { background: var(--bg-surface); color: var(--text-main); }
+        .sidebar-divider { height: 1px; background: var(--border-color); margin: 16px 0; }
+
+        /* RELEASE CARDS */
+        .release { margin-bottom: 70px; scroll-margin-top: 100px; }
+        .release-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+        .release-version {
+            font-size: 1.6rem; font-weight: 700; color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+        .release-badge {
+            padding: 4px 12px; border-radius: 20px; font-size: 0.78rem;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .badge-major { background: rgba(59,130,246,0.12); color: var(--primary); border: 1px solid rgba(59,130,246,0.25); }
+        .badge-minor { background: rgba(139,92,246,0.12); color: #a855f7; border: 1px solid rgba(139,92,246,0.25); }
+        .badge-patch { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+        .release-date { color: var(--text-muted); font-size: 0.9rem; margin-left: auto; }
+        .release-body { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 36px; }
+        .release-summary { font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 30px; }
+
+        .change-group { margin-bottom: 24px; }
+        .change-group:last-child { margin-bottom: 0; }
+        .change-group-title {
+            font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .tag-new { color: var(--primary); }
+        .tag-fix { color: #22c55e; }
+        .tag-improve { color: #f59e0b; }
+        .tag-breaking { color: #ef4444; }
+        .change-list { list-style: none; padding: 0; margin: 0; }
+        .change-list li {
+            padding: 10px 0; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: flex-start; gap: 12px;
+            color: var(--text-main); font-size: 0.97rem;
+        }
+        .change-list li:last-child { border-bottom: none; }
+        .change-list li i { margin-top: 2px; font-size: 0.85rem; flex-shrink: 0; }
+        .change-list li .cmd-chip {
+            background: var(--bg-elevated); color: var(--text-muted);
+            padding: 2px 8px; border-radius: 5px; font-size: 0.8rem;
+            font-family: monospace; border: 1px solid var(--border-color); white-space: nowrap;
+        }
+        .release-divider { height: 1px; background: var(--border-color); margin: 70px 0; }
+
+        @media (max-width: 900px) {
+            .releases-layout { grid-template-columns: 1fr; }
+            .releases-sidebar { display: none; }
+            .page-header h1 { font-size: 2.5rem; }
+            .nav-center { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo"><i class="fas fa-compass"></i> SIDMax</a>
+        <div class="nav-center">
+            <a href="index.html#products">Products</a>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#commands">Commands</a>
+            <a href="roadmap.html">Roadmap</a>
+            <a href="whatsnew.html" class="active">What's New</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle" id="theme-btn" title="Toggle theme"><i class="fas fa-moon"></i></button>
+            <a href="index.html#contact">Log in</a>
+            <a href="index.html#contact" class="btn-signup">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <div class="page-header-inner">
+            <div class="page-eyebrow"><i class="fas fa-rocket"></i> Release Notes</div>
+            <h1>What's New</h1>
+            <p>Every update, improvement, and new command added to SIDMax — documented in full. We ship continuously, so check back often.</p>
+        </div>
+    </div>
+
+    <div class="releases-layout">
+        <!-- Sidebar -->
+        <aside class="releases-sidebar">
+            <div class="sidebar-label">Versions</div>
+            <nav class="sidebar-nav">
+                <a href="#v2-4" class="active">v2.4 — Aug 2026</a>
+                <a href="#v2-3">v2.3 — Jun 2026</a>
+                <a href="#v2-2">v2.2 — Apr 2026</a>
+                <a href="#v2-1">v2.1 — Feb 2026</a>
+                <a href="#v2-0">v2.0 — Jan 2026</a>
+            </nav>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-label">Changelog Tags</div>
+            <div style="font-size:0.88rem; display:flex; flex-direction:column; gap:8px; padding: 0 14px;">
+                <span><i class="fas fa-circle tag-new" style="font-size:0.6rem;"></i> New Feature</span>
+                <span><i class="fas fa-circle tag-fix" style="font-size:0.6rem;"></i> Bug Fix</span>
+                <span><i class="fas fa-circle tag-improve" style="font-size:0.6rem;"></i> Improvement</span>
+                <span><i class="fas fa-circle tag-breaking" style="font-size:0.6rem;"></i> Breaking Change</span>
+            </div>
+        </aside>
+
+        <!-- Releases -->
+        <main>
+            <!-- v2.4 -->
+            <div class="release" id="v2-4">
+                <div class="release-header">
+                    <div class="release-version">v2.4.0</div>
+                    <span class="release-badge badge-major">Major</span>
+                    <div class="release-date"><i class="far fa-calendar"></i> August 2026</div>
+                </div>
+                <div class="release-body">
+                    <div class="release-summary">This release introduces the new BBS auto-export pipeline, collapsible command categories in the dashboard, and multiple layer management improvements that reduce layer conflicts to zero.</div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-new"><i class="fas fa-sparkles"></i> NEW FEATURES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-plus tag-new"></i><span>BBS auto-export pipeline — generate Bar Bending Schedules from drawing data in one command <span class="cmd-chip">SIDmax_BBS_Export</span></span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Smart rebar array command with automatic stirrup spacing <span class="cmd-chip">SIDmax_RebarArray</span></span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Continuous elevation tag placement with auto-increment <span class="cmd-chip">SIDmax_ElevTag</span></span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Layer dictionary auto-generation — creates all SIDMax standard layers in one click <span class="cmd-chip">SIDmax_LayerDict</span></span></li>
+                        </ul>
+                    </div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-improve"><i class="fas fa-arrow-up"></i> IMPROVEMENTS</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-arrow-up tag-improve"></i><span>Offset calculation engine is now 3x faster on large drawings with 1000+ entities</span></li>
+                            <li><i class="fas fa-arrow-up tag-improve"></i><span>Improved unit conversion accuracy for inch-to-mm rebar diameter lookups</span></li>
+                            <li><i class="fas fa-arrow-up tag-improve"></i><span>Command aliases now case-insensitive for faster terminal entry</span></li>
+                        </ul>
+                    </div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-fix"><i class="fas fa-bug"></i> BUG FIXES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed crash when BBS table exceeded 200 rows in AutoCAD 2022</span></li>
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed layer conflict when running multiple rebar commands in quick succession</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="release-divider"></div>
+
+            <!-- v2.3 -->
+            <div class="release" id="v2-3">
+                <div class="release-header">
+                    <div class="release-version">v2.3.0</div>
+                    <span class="release-badge badge-minor">Minor</span>
+                    <div class="release-date"><i class="far fa-calendar"></i> June 2026</div>
+                </div>
+                <div class="release-body">
+                    <div class="release-summary">RebarCAD compatibility improvements and the introduction of the breakline drawing automation family of commands.</div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-new"><i class="fas fa-sparkles"></i> NEW FEATURES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-plus tag-new"></i><span>Automated breakline placement for section views <span class="cmd-chip">SIDmax_Breakline</span></span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Total length calculator with live running sum display <span class="cmd-chip">SIDmax_TotLen</span></span></li>
+                        </ul>
+                    </div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-fix"><i class="fas fa-bug"></i> BUG FIXES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed RebarCAD 2019 compatibility issue with layer naming conventions</span></li>
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed text alignment offset in detail callout commands</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="release-divider"></div>
+
+            <!-- v2.2 -->
+            <div class="release" id="v2-2">
+                <div class="release-header">
+                    <div class="release-version">v2.2.0</div>
+                    <span class="release-badge badge-minor">Minor</span>
+                    <div class="release-date"><i class="far fa-calendar"></i> April 2026</div>
+                </div>
+                <div class="release-body">
+                    <div class="release-summary">New text justification tools and quality of life improvements across all dimensions-related commands.</div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-new"><i class="fas fa-sparkles"></i> NEW FEATURES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-plus tag-new"></i><span>Multi-line text auto-justification with paragraph support <span class="cmd-chip">SIDmax_TextJustify</span></span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Dimension purge — removes all orphan dimensions in one run <span class="cmd-chip">SIDmax_PurgeDim</span></span></li>
+                        </ul>
+                    </div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-improve"><i class="fas fa-arrow-up"></i> IMPROVEMENTS</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-arrow-up tag-improve"></i><span>Faster startup load time — reduced from 1.8s to 0.4s on first AutoCAD open</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="release-divider"></div>
+
+            <!-- v2.1 -->
+            <div class="release" id="v2-1">
+                <div class="release-header">
+                    <div class="release-version">v2.1.0</div>
+                    <span class="release-badge badge-patch">Patch</span>
+                    <div class="release-date"><i class="far fa-calendar"></i> February 2026</div>
+                </div>
+                <div class="release-body">
+                    <div class="release-summary">Stability patch with critical bug fixes for large drawing performance and LISP loader improvements.</div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-fix"><i class="fas fa-bug"></i> BUG FIXES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed memory leak in rebar callout loop for drawings with 500+ entities</span></li>
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed LISP loader failure on AutoCAD 2024 cold start</span></li>
+                            <li><i class="fas fa-wrench tag-fix"></i><span>Fixed BBS export skipping last row under specific Unicode character conditions</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="release-divider"></div>
+
+            <!-- v2.0 -->
+            <div class="release" id="v2-0">
+                <div class="release-header">
+                    <div class="release-version">v2.0.0</div>
+                    <span class="release-badge badge-major">Major</span>
+                    <div class="release-date"><i class="far fa-calendar"></i> January 2026</div>
+                </div>
+                <div class="release-body">
+                    <div class="release-summary">SIDMax 2.0 — a complete ground-up rewrite. Introduced the modular command architecture, 89+ new commands, and the official SIDMax Dashboard website.</div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-new"><i class="fas fa-sparkles"></i> NEW FEATURES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-plus tag-new"></i><span>89+ new automation commands across 12 categories</span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>New modular LISP architecture for easier future extensibility</span></li>
+                            <li><i class="fas fa-plus tag-new"></i><span>Official SIDMax Dashboard website with command directory and roadmap</span></li>
+                        </ul>
+                    </div>
+                    <div class="change-group">
+                        <div class="change-group-title tag-breaking"><i class="fas fa-exclamation-triangle"></i> BREAKING CHANGES</div>
+                        <ul class="change-list">
+                            <li><i class="fas fa-exclamation tag-breaking"></i><span>All v1.x command aliases have been renamed with the <span class="cmd-chip">SIDmax_</span> prefix. Update any custom scripts accordingly.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<footer style="border-top: 1px solid var(--border-color); padding: 40px 0; background: var(--bg-base);">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+        <a href="index.html" style="font-size:1.2rem;font-weight:800;color:var(--text-main);text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-compass" style="color:var(--primary);"></i> SIDMax
+        </a>
+        <div style="color:var(--text-muted);font-size:0.88rem;">&copy; 2026 TheRajaperumal. All rights reserved.</div>
+        <div style="display:flex;gap:20px;">
+            <a href="index.html" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">Home</a>
+            <a href="roadmap.html" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">Roadmap</a>
+            <a href="index.html#contact" style="color:var(--text-muted);text-decoration:none;font-size:0.9rem;">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+const themeBtn = document.getElementById('theme-btn');
+const htmlEl = document.documentElement;
+const saved = localStorage.getItem('sidmax-theme') || 'dark';
+htmlEl.setAttribute('data-theme', saved);
+themeBtn.innerHTML = saved === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+themeBtn.addEventListener('click', () => {
+    const curr = htmlEl.getAttribute('data-theme');
+    const next = curr === 'dark' ? 'light' : 'dark';
+    htmlEl.setAttribute('data-theme', next);
+    localStorage.setItem('sidmax-theme', next);
+    themeBtn.innerHTML = next === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+});
+
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('.release');
+const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            const link = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+            if (link) link.classList.add('active');
+        }
+    });
+}, { threshold: 0.4 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
