@@ -98,6 +98,54 @@
             td { padding:8px 0;border:none; }
             tr { border-bottom:1px solid var(--border-color);padding-bottom:14px;margin-bottom:14px; }
         }
+    
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+        /* Page Loader */
+        #page-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        #page-loader.hidden { opacity: 0; pointer-events: none; }
+        .loader-spinner {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Feature Button */
+        .btn-feature {
+            color: var(--accent) !important;
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-feature:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* Nav scroll state */
+        nav { transition: all 0.3s ease; }
+        nav.scrolled {
+            padding: 10px 0;
+            background: rgba(9, 9, 11, 0.85);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
     </style>
 </head>
 <body>
@@ -1891,5 +1939,20 @@ function clearSearch() {
     searchInput.focus();
 }
 </script>
+
+<div id="page-loader"><div class="loader-spinner"></div></div>
+<script>
+    window.addEventListener('load', () => {
+        document.getElementById('page-loader').classList.add('hidden');
+    });
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if(nav) {
+            if(window.scrollY > 20) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        }
+    });
+</script>
+
 </body>
 </html>
