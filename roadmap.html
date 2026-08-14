@@ -370,12 +370,13 @@
             display: grid;
             grid-template-columns: 1fr 340px;
             gap: 50px;
-            align-items: start;
+            align-items: stretch;
         }
 
-        .timeline-sticky {
-            position: sticky;
-            top: 100px;
+        .timeline-panel {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             background: rgba(24, 24, 27, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
@@ -384,9 +385,10 @@
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             animation: fadeInRight 0.6s forwards;
+            box-sizing: border-box;
         }
 
-        .timeline-sticky h3 {
+        .timeline-panel h3 {
             margin: 0 0 30px 0;
             font-size: 1.25rem;
             font-weight: 700;
@@ -396,9 +398,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-shrink: 0;
         }
         
-        .timeline-sticky h3 i {
+        .timeline-panel h3 i {
             color: var(--accent);
         }
 
@@ -407,6 +410,10 @@
             padding: 0;
             margin: 0;
             position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .timeline-list::before {
@@ -816,7 +823,7 @@
     </div> <!-- /phases-column -->
     
     <div class="timeline-column">
-        <div class="timeline-sticky">
+        <div class="timeline-panel">
             <h3><i class="fas fa-route"></i> Release Timeline</h3>
             <ul class="timeline-list">
                 <li class="timeline-item done">
