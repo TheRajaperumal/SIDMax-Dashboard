@@ -365,6 +365,116 @@
             100% { transform: rotate(45deg) scale(1); opacity: 1; }
         }
 
+        /* Roadmap Layout & Timeline */
+        .roadmap-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .timeline-sticky {
+            position: sticky;
+            top: 100px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            animation: fadeInRight 0.6s forwards;
+        }
+
+        .timeline-sticky h3 {
+            margin: 0 0 25px 0;
+            font-size: 1.2rem;
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        .timeline-list::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 7px;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .tl-marker {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 2px solid var(--text-muted);
+            margin-top: 3px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .timeline-item.done .tl-marker {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+
+        .timeline-item.active .tl-marker {
+            background: transparent;
+            border-color: var(--accent);
+            border-width: 4px;
+        }
+
+        .tl-content strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .tl-content span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 900px) {
+            .roadmap-layout {
+                grid-template-columns: 1fr;
+            }
+            .timeline-column {
+                order: -1;
+                margin-bottom: 30px;
+            }
+            .timeline-sticky {
+                position: static;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -391,20 +501,11 @@
         <p>Interactive tracking dashboard for the Rebar Detailing Assistant</p>
     </div>
 
-    <div class="progress-container">
-        <div class="progress-header">
-            <h2>Overall Progress</h2>
-            <div class="progress-stats"><span id="completed-count">0</span> / 22 Tools</div>
-        </div>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progress-bar"></div>
-        </div>
-        <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
-    </div>
-
-    <!-- Phase 1 -->
-    <div class="phase-section">
-        <div class="phase-header">
+    <div class="roadmap-layout">
+        <div class="phases-column">
+            <!-- Phase 1 -->
+            <div class="phase-section">
+                <div class="phase-header">
             <h3>Phase 1: Quality Control & Entity Auditing</h3>
             <p>Tools that integrate directly into the existing SIDmax_DrawingChecker engine.</p>
         </div>
@@ -671,7 +772,53 @@
             </label>
         </div>
     </div>
-
+        </div>
+        
+        <button class="reset-btn" onclick="resetProgress()">Reset All Progress</button>
+    </div>
+    
+    <div class="timeline-column">
+        <div class="timeline-sticky">
+            <h3>Release Timeline</h3>
+            <ul class="timeline-list">
+                <li class="timeline-item done">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <strong>Phase 1</strong>
+                        <span>Completed</span>
+                    </div>
+                </li>
+                <li class="timeline-item active">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <strong>Phase 2</strong>
+                        <span>In Progress</span>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <strong>Phase 3</strong>
+                        <span>Planned</span>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <strong>Phase 4</strong>
+                        <span>Planned</span>
+                    </div>
+                </li>
+                <li class="timeline-item">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <strong>Phase 5</strong>
+                        <span>Planned</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -715,16 +862,7 @@
     }
 
     function updateProgress() {
-        let completed = 0;
-        for (let i = 1; i <= TOTAL_TASKS; i++) {
-            if (document.getElementById(`check-${i}`).checked) {
-                completed++;
-            }
-        }
-        
-        const percentage = (completed / TOTAL_TASKS) * 100;
-        document.getElementById('progress-bar').style.width = `${percentage}%`;
-        document.getElementById('completed-count').innerText = completed;
+        // Timeline could be dynamically updated here if needed
     }
 
     function resetProgress() {
