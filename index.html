@@ -340,23 +340,35 @@
         /* Search Bar */
         .cmd-search-wrap {
             margin-bottom: 40px;
-            position: relative;
         }
-        .cmd-search-wrap i {
-            position: absolute; left: 18px; top: 50%;
-            transform: translateY(-50%); color: var(--text-muted);
-            font-size: 1rem;
-        }
-        #cmd-search {
-            width: 100%; padding: 16px 16px 16px 48px;
+        .cmd-search-inner {
+            display: flex;
+            align-items: center;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: 12px; color: var(--text-main);
-            font-size: 1rem; font-family: inherit;
+            border-radius: 12px;
+            padding: 0 18px;
+            gap: 12px;
             transition: border-color 0.2s;
-            box-sizing: border-box;
         }
-        #cmd-search:focus { outline: none; border-color: var(--primary); }
+        .cmd-search-inner:focus-within {
+            border-color: var(--primary);
+        }
+        .cmd-search-inner i {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+        #cmd-search {
+            flex: 1;
+            padding: 16px 0;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+        }
         #cmd-search::placeholder { color: var(--text-muted); }
         #search-count {
             text-align: right; color: var(--text-muted);
@@ -862,8 +874,10 @@
     </div>
 
     <div class="cmd-search-wrap">
-        <i class="fas fa-search"></i>
-        <input id="cmd-search" type="text" placeholder="Search by command name, alias or description..." autocomplete="off">
+        <div class="cmd-search-inner">
+            <i class="fas fa-search"></i>
+            <input id="cmd-search" type="text" placeholder="Search by command name, alias or description..." autocomplete="off">
+        </div>
         <div id="search-count">89 commands</div>
     </div>
 
