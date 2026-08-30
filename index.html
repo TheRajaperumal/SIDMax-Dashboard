@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIDMax Rebar Detailing - The Future of Drafting Automation</title>
-    <meta name="description" content="SIDMax is the ultimate AutoCAD and RebarCAD drafting automation suite. Reduce detailing time by 15% with 89+ precision tools for rebar, BBS, layers, and more.">
+    <meta name="description" content="SIDMax is the ultimate AutoCAD and RebarCAD drafting automation suite. Reduce detailing time by 15% with 80+ precision tools across 7 categories for rebar, BBS, layers, and more.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -693,6 +693,98 @@
             background: var(--bg-base);
             transform: translateY(-4px);
         }
+    
+        /* ===================== SUITE GALLERY STACK ===================== */
+        .suite-gallery-section { padding: 90px 0 60px; position: relative; }
+        .suite-header { text-align: center; margin-bottom: 50px; }
+        .suite-eyebrow { color: var(--primary); font-size: 0.82rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: inline-block; margin-bottom: 10px; }
+        .suite-title { font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; color: var(--text-main); margin-bottom: 12px; }
+        .suite-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 620px; margin: 0 auto; line-height: 1.7; }
+        
+        .suite-slider-wrap { position: relative; overflow: hidden; border-radius: 24px; }
+        .suite-track { display: flex; transition: transform 0.75s cubic-bezier(0.77, 0, 0.175, 1); will-change: transform; }
+        
+        .suite-slide { min-width: 100%; display: grid; grid-template-columns: 1.15fr 1fr; gap: 50px; align-items: center; padding: 20px; opacity: 0; transform: scale(0.97); transition: opacity 0.6s ease, transform 0.6s ease; box-sizing: border-box; }
+        .suite-slide.active { opacity: 1; transform: scale(1); }
+        
+        .suite-img-box { position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5); border: 1px solid var(--border-color); }
+        .suite-img-box img { width: 100%; height: auto; display: block; transition: transform 0.6s ease; }
+        .suite-slide.active .suite-img-box img { transform: scale(1.02); }
+        
+        .suite-slide-info { padding: 10px 0; }
+        .suite-slide-num { font-size: 0.75rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--primary); }
+        .suite-badge-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 18px; }
+        .tag-live { background: rgba(16,185,129,0.12); color: #10b981; border: 1px solid rgba(16,185,129,0.25); }
+        .tag-soon { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
+        .tag-plan { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+        
+        .suite-slide-info h3 { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); margin-bottom: 14px; line-height: 1.2; }
+        .suite-slide-info p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 24px; }
+        
+        .suite-feature-pills { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; list-style: none; padding: 0; }
+        .suite-feature-pills li { display: flex; align-items: center; gap: 12px; font-size: 0.92rem; color: #d4d4d8; }
+        .suite-feature-pills li i { color: var(--primary); font-size: 0.8rem; }
+        
+        .suite-btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+        .suite-btn { padding: 12px 24px; border-radius: 10px; text-decoration: none; font-size: 0.9rem; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .suite-btn-primary { background: var(--primary); color: #fff; }
+        .suite-btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .suite-btn-sec { color: var(--text-muted); border: 1px solid var(--border-color); background: var(--bg-surface); }
+        .suite-btn-sec:hover { color: var(--text-main); border-color: rgba(255,255,255,0.25); }
+        
+        .suite-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 36px; padding: 0 10px; }
+        .gallery-arrow { width: 52px; height: 52px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-main); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; outline: none; }
+        .gallery-arrow:hover { background: var(--bg-elevated); transform: scale(1.06); border-color: rgba(255,255,255,0.2); }
+        .gallery-arrow:active { transform: scale(0.96); }
+        
+        .gallery-dots { display: flex; gap: 8px; align-items: center; }
+        .gdot { width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s; }
+        .gdot.active { width: 28px; background: var(--primary); }
+
+        /* ===================== DEMO VIDEO ===================== */
+        .video-showcase-section { padding: 80px 0; }
+        .video-mockup { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .video-topbar { padding: 14px 20px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .video-dots { display: flex; gap: 8px; }
+        .vdot { width: 12px; height: 12px; border-radius: 50%; }
+        .vdot.r { background: #ef4444; } .vdot.y { background: #eab308; } .vdot.g { background: #22c55e; }
+        .video-title { font-size: 0.85rem; color: var(--text-muted); font-family: monospace; }
+        .video-content-area { padding: 40px 30px; text-align: center; background: radial-gradient(circle at center, rgba(59,130,246,0.06), transparent 70%); }
+        .video-play-btn { width: 76px; height: 76px; border-radius: 50%; background: var(--primary); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 0 40px rgba(59,130,246,0.5); transition: all 0.3s; margin-bottom: 20px; }
+        .video-play-btn:hover { transform: scale(1.1); box-shadow: 0 0 60px rgba(59,130,246,0.8); }
+
+        /* ===================== PRICING ===================== */
+        .pricing-section { padding: 90px 0; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 50px; }
+        .price-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 32px; display: flex; flex-direction: column; transition: all 0.3s; position: relative; }
+        .price-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.2); }
+        .price-card.featured { border-color: var(--primary); background: linear-gradient(180deg, rgba(59,130,246,0.06) 0%, var(--bg-surface) 100%); }
+        .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .price-tier { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .price-desc { font-size: 0.9rem; color: var(--text-muted); min-height: 48px; line-height: 1.5; margin-bottom: 20px; }
+        .price-val { font-size: 2.8rem; font-weight: 800; color: var(--text-main); letter-spacing: -1px; margin-bottom: 24px; }
+        .price-val span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .price-features { list-style: none; padding: 0; margin: 0 0 32px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+        .price-features li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #d4d4d8; }
+        .price-features li i { color: var(--primary); }
+        .price-btn { width: 100%; padding: 14px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 700; font-size: 0.92rem; transition: all 0.2s; }
+        .price-btn-primary { background: var(--primary); color: white; }
+        .price-btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .price-btn-outline { background: var(--bg-elevated); color: var(--text-main); border: 1px solid var(--border-color); }
+        .price-btn-outline:hover { background: var(--bg-base); border-color: rgba(255,255,255,0.25); }
+
+        /* ===================== DOWNLOAD CTA ===================== */
+        .download-box { background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.12)); border: 1px solid rgba(59,130,246,0.25); border-radius: 24px; padding: 70px 48px; text-align: center; margin: 80px 0 40px; position: relative; overflow: hidden; }
+        .download-box h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; color: var(--text-main); }
+        .download-box p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 36px; line-height: 1.7; }
+        .dl-badges { display: flex; justify-content: center; gap: 20px; margin-top: 30px; font-size: 0.85rem; color: var(--text-muted); flex-wrap: wrap; }
+        .dl-badge-item { display: flex; align-items: center; gap: 8px; }
+
+        @media (max-width: 900px) {
+            .suite-slide { grid-template-columns: 1fr; gap: 30px; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+
     </style>
 </head>
 <body>
@@ -747,12 +839,13 @@
             <i class="fas fa-compass"></i> SIDMax
         </a>
         <div class="nav-center">
-            <a href="products.html">Products</a>
-            <a href="index.html#features">Features</a>
+            <a href="#products">Products</a>
+            <a href="#demo">Demo</a>
             <a href="commands.html">Commands</a>
             <a href="roadmap.html">Roadmap</a>
-            <a href="whatsnew.html">What's New</a>
-            <a href="index.html#contact">Contact</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#download">Download</a>
+            <a href="#contact">Contact</a>
         </div>
         <div class="nav-right">
             <button class="theme-toggle" id="theme-btn" title="Toggle theme"><i class="fas fa-moon"></i></button>
@@ -785,10 +878,10 @@
             <div class="typewriter-wrap" data-reveal data-delay="2">
                 <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
             </div>
-            <p data-reveal data-delay="3">SIDMax is the ultimate professional drafting automation suite for AutoCAD and RebarCAD environments. Reduce detailing time by up to 15% with 89+ precision tools.</p>
-            <div data-reveal data-delay="4">
-                <a href="commands.html" class="cta-btn">Explore Commands</a>
-                <a href="#contact" class="cta-secondary">Contact Sales</a>
+            <p data-reveal data-delay="3">SIDMax is the ultimate professional drafting automation suite for AutoCAD and RebarCAD environments. Reduce detailing time by up to 15% with 80+ precision tools across 7 categories.</p>
+            <div data-reveal data-delay="4" style="display:flex;gap:14px;flex-wrap:wrap;">
+                <a href="#download" class="cta-btn"><i class="fas fa-download"></i> Download v0.9.0</a>
+                <a href="#products" class="cta-secondary"><i class="fas fa-layer-group"></i> Explore Suite</a>
             </div>
         </div>
 
@@ -1281,6 +1374,40 @@ document.querySelectorAll('.cta-btn, .auth-btn').forEach(btn => {
         setTimeout(() => ripple.remove(), 620);
     });
 });
+
+// ---- HOMEPAGE SUITE GALLERY SLIDER ----
+const sSlides = document.querySelectorAll('.suite-slide');
+const sTrack = document.getElementById('suiteTrack');
+const sDots = document.querySelectorAll('.gdot');
+const sPrev = document.getElementById('gPrev');
+const sNext = document.getElementById('gNext');
+let sIndex = 0;
+const sTotal = sSlides.length;
+
+function goSuite(idx) {
+    if (!sTrack || sTotal === 0) return;
+    sSlides[sIndex].classList.remove('active');
+    sDots[sIndex].classList.remove('active');
+    sIndex = (idx + sTotal) % sTotal;
+    sTrack.style.transform = `translateX(-${sIndex * 100}%)`;
+    sSlides[sIndex].classList.add('active');
+    sDots[sIndex].classList.add('active');
+}
+
+if (sPrev && sNext) {
+    sPrev.addEventListener('click', () => goSuite(sIndex - 1));
+    sNext.addEventListener('click', () => goSuite(sIndex + 1));
+    sDots.forEach(dot => {
+        dot.addEventListener('click', () => goSuite(parseInt(dot.dataset.index)));
+    });
+    // Auto slide every 7 seconds
+    let sTimer = setInterval(() => goSuite(sIndex + 1), 7000);
+    sTrack.addEventListener('mouseenter', () => clearInterval(sTimer));
+    sTrack.addEventListener('mouseleave', () => {
+        sTimer = setInterval(() => goSuite(sIndex + 1), 7000);
+    });
+}
+
 </script>
 </body>
 </html>
